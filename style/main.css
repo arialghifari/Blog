@@ -3,6 +3,7 @@
 :root {
   --background: #f6f5f1;
   --soft: #d3d2cc;
+  --active: #efead7;
   --dark: #474747;
   --darker: #181818;
 }
@@ -39,6 +40,81 @@ body {
   border-bottom: 1px solid var(--dark);
 }
 
+aside * {
+  font-family: Poppins, sans-serif;
+}
+
+.nav-side a {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+.nav-side p {
+  margin: 0;
+  padding: 8px 16px;
+}
+
+.nav-side p:hover {
+  background-color: var(--active);
+}
+
+.category__title {
+  font-weight: 600;
+  margin: 32px 0 20px 0;
+}
+
+.manage__title {
+  font-weight: 600;
+}
+
+.active {
+  background-color: var(--active);
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--dark);
+  background-color: #fff;
+}
+
+.btn-primary {
+  border: none;
+  background-color: var(--dark);
+  color: var(--soft);
+  padding: 10px;
+  width: 100%;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  color: var(--soft);
+  background-color: var(--darker);
+}
+
+.search .input {
+  padding-left: 40px;
+}
+
+form.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+form.search img {
+  position: absolute;
+  left: 12px;
+}
+
+.title-post {
+  font-weight: bold;
+  font-size: 20px;
+  color: var(--dark);
+}
+
 .banner {
   width: 100%;
   display: flex;
@@ -66,24 +142,15 @@ article {
   margin: 36px 0;
 }
 
-.top-post {
-  margin: 36px 0;
-}
-
 .post a {
   text-decoration: none;
   height: 100%;
 }
 
-.post__image {
-  width: 100%;
-  max-height: 338px;
-  object-fit: cover;
-}
-
+.post__image,
 .post__image-large {
   width: 100%;
-  max-height: 500px;
+  max-height: 300px;
   object-fit: cover;
 }
 
@@ -94,7 +161,7 @@ article {
 }
 
 .post__title {
-  font-family: "Poppins";
+  font-family: Poppins, sans-serif;
   text-decoration: none;
   font-weight: bold;
   color: var(--darker);
@@ -117,8 +184,22 @@ footer {
 
 footer * {
   color: var(--dark);
+  margin: 0;
 }
 
 footer a:hover {
   color: var(--darker);
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1200px) {
+  .post__image {
+    height: 180px;
+  }
+
+  .post__image-large {
+    max-height: 400px;
+  }
 }
