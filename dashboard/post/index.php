@@ -1,3 +1,18 @@
+<?php
+
+include '../../connection.php';
+
+$sql = "SELECT * FROM post";
+$query = mysqli_query($conn, $sql);
+
+function getCurrentUrl()
+{
+	$fullUrl = $_SERVER['REQUEST_URI'];
+	return explode("/", $fullUrl)[4];
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +22,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="../style/main.css" />
+	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
 
@@ -15,7 +30,7 @@
 	<div class="container">
 		<!-- Start Top Navigation -->
 		<nav class="nav-main" aria-label="main navigation">
-			<a href="#"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
+			<a href="../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
 				<a href="#">About Us</a>
@@ -26,24 +41,24 @@
 
 		<header>
 			<section class="banner">
-				<img src="../assets/banner.jpg" alt="Banner" />
+				<img src="../../assets/banner.jpg" alt="Banner" />
 				<h1 class="display-1">THE BLOG</h1>
 			</section>
 		</header>
 
 		<main>
-			<div class="row my-4">
+			<div class="row my-5">
 				<!-- Start Aside -->
 				<aside class="col-12 col-md-3 mb-4">
 					<div class="manage">
 						<p class="manage__title">Manage</p>
 
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<a href="./post_view.php">
-								<p>Post</p>
+							<a href="./">
+								<p class="<?php if (!getCurrentUrl()) echo 'active' ?>">Post</p>
 							</a>
 							<a href="#">
-								<p>Category</p>
+								<p class="">Category</p>
 							</a>
 							<a href="#">
 								<p>User</p>
@@ -53,27 +68,33 @@
 				</aside>
 
 				<section class="col-12 col-md-9">
-					<h3>Add Post</h3>
-					<hr>
+					<a href="./add_form.php" class="btn-primary mb-3">Add Post</a>
 
-					<form action="./post_add_process.php" method="post">
-						<label for="title">Title</label>
-						<input type="text" name="title" id="title" class="input mt-1 mb-2">
+					<table class="table">
+						<tr>
+							<th>No</th>
+							<th>Title</th>
+							<th>Category</th>
+							<th>Action</th>
+						</tr>
+						<?php
+						$no = 1;
 
-						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2">
+						while ($row = mysqli_fetch_array($query)) {
+						?>
 
-						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10"></textarea>
+							<tr>
+								<th><?= $no ?></th>
+								<td><?= $row['title'] ?></td>
+								<td><?= $row['id_category'] ?></td>
+								<td><a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> | <a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
+							</tr>
 
-						<label for="category">Category</label>
-						<select name="category" id="category" class="input mt-1 mb-2">
-							<option value="Technology">Technology</option>
-							<option value="Lifestyle">Lifestyle</option>
-						</select>
-
-						<input type="submit" name="submit" value="Publish" class="btn-primary">
-					</form>
+						<?php
+							$no++;
+						}
+						?>
+					</table>
 				</section>
 		</main>
 

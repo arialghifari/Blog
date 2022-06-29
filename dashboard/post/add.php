@@ -1,6 +1,6 @@
 <?php
 
-include "connection.php";
+include "../../connection.php";
 
 if (isset($_POST['submit'])) {
 	$title = $_POST['title'];
@@ -12,12 +12,10 @@ if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO post VALUES ('', '$title', '$body', 'img2.jpg', '1', '1', '$current_date')";
 
 	if (mysqli_query($conn, $sql)) {
-		header("Location: ./post_view.php");
+		header("Location: ./");
 	} else {
 		echo "Error: " . $sql . "<br/>" . mysqli_error($conn);
 	}
-
-	die();
 } else {
-	header("Location: ./add_post_form.php");
+	header("Location: ./");
 }
