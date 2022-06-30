@@ -24,7 +24,7 @@ function getCurrentUrl()
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
-  <script src="../../style/bootstrap.bundle.min.js"></script>
+	<script src="../../style/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -94,7 +94,10 @@ function getCurrentUrl()
 								<td><?= $row['category.name'] ?></td>
 								<td><?= $row['author'] ?></td>
 								<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
-								<td><a href="./edit_form.php?id=<?= $row['id'] ?>">view</a> | <a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> | <a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
+								<td>
+									<a href="../../read.php?id=<?= $row['id'] ?>">view</a> |
+									<a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> |
+									<a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
 							</tr>
 
 						<?php

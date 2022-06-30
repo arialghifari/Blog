@@ -9,6 +9,8 @@ $row = mysqli_fetch_array(mysqli_query($conn, $sql));
 $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
 
+@$errorMessage = $_GET['err'];
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +21,8 @@ $query_category = mysqli_query($conn, $sql_category);
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
-  <script src="../../style/bootstrap.bundle.min.js"></script>
+	<script src="../../style/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.tiny.cloud/1/9u2jycvj0mas1t05212h7sepjnmtmcm9md5teyhi7rnnlcpf/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -69,28 +72,33 @@ $query_category = mysqli_query($conn, $sql_category);
 					<h3>Edit Post</h3>
 					<hr>
 
-					<form action="./update.php" method="post">
+					<form action="./update.php" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="<?= $row['id'] ?>" class="input mt-1 mb-2">
 
 						<label for="title">Title</label>
-						<input type="text" name="title" id="title" value="<?= $row['title'] ?>" class="input mt-1 mb-2">
+						<input type="text" name="title" id="title" value="<?= $row['title'] ?>" class="input mt-1 mb-2" required>
 
 						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2">
+						<img src="../../assets/post_image/<?= $row['image'] ?>" class="preview__image" alt="" />
+						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg">
+						<p><small>* Choose image if you want to change</small></p>
 
 						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10"><?= $row['body'] ?></textarea>
+						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10" required><?= $row['body'] ?></textarea>
 
 						<label for="category">Category</label>
-						<select name="category" id="category" class="input mt-1 mb-2">
+						<select name="category" id="category" class="input mt-1 mb-2" required>
 							<option disabled>Choose</option>
 							<?php while ($row_category = mysqli_fetch_array($query_category)) { ?>
-								<option value="<?= $row_category['id'] ?>" <?php if ($row_category['id'] == $row['id_category']) echo 'selected' ?> >
+								<option value="<?= $row_category['id'] ?>" <?php if ($row_category['id'] == $row['id_category']) echo 'selected' ?>>
 									<?= $row_category['name'] ?>
 								</option>
 							<?php } ?>
 						</select>
 
+						<?php if ($errorMessage) { ?>
+							<p class="error">* <?= $errorMessage ?></p>
+						<?php } ?>
 						<input type="submit" name="submit" value="Update" class="btn-primary">
 					</form>
 				</section>
@@ -100,6 +108,13 @@ $query_category = mysqli_query($conn, $sql_category);
 			<p>Copyright © <?= date('Y') ?> <a href="#">The Blog</a></p>
 		</footer>
 	</div>
+
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			height: 600,
+		});
+	</script>
 </body>
 
 </html>

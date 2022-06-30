@@ -1,3 +1,17 @@
+<?php
+
+include './connection.php';
+
+$sql_category = "SELECT * FROM category ORDER BY name";
+$query_category = mysqli_query($conn, $sql_category);
+
+$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
+				FROM post
+				LEFT JOIN user ON post.id_user = user.id";
+$query_post = mysqli_query($conn, $sql_post);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,24 +144,14 @@
             <p class="category__title">Blog Categories</p>
 
             <nav class="nav-side" aria-label="Category Navigation">
-              <a href="#">
-                <p class="active">View All</p>
+              <a href="category.php?name=*">
+                <p>View All</p>
               </a>
-              <a href="#">
-                <p>Technology</p>
-              </a>
-              <a href="#">
-                <p>Intermezzo</p>
-              </a>
-              <a href="#">
-                <p>Politics</p>
-              </a>
-              <a href="#">
-                <p>Lifestyle</p>
-              </a>
-              <a href="#">
-                <p>Food</p>
-              </a>
+              <?php while ($row = mysqli_fetch_array($query_category)) { ?>
+                <a href="category.php?name=<?= $row['name'] ?>">
+                  <p><?= $row['name'] ?></p>
+                </a>
+              <?php } ?>
             </nav>
           </div>
         </aside>
@@ -157,105 +161,26 @@
         <article class="col-12 col-md-9 post">
           <p class="title-post">Recent Post</p>
           <div class="row mb-3">
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-              <p class="post__date">Jun 1, 20231</p>
-              <a href="#">
-                <p class="post__title">Pellentesque felis</p>
-              </a>
-              <a href="#">
-                <p class="post__body">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero delenitiLorem ipsum
-                  dolor sit amet consectetur, adipisicing elit. Dolorem at
-                  necessitatibus rem, vero delenitiLorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero deleniti
-                </p>
-              </a>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-              <p class="post__date">Jun 1, 20231</p>
-              <a href="#">
-                <p class="post__title">
-                  Pellentesque felis in ullamcorper erat eget
-                </p>
-              </a>
-              <a href="#">
-                <p class="post__body">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero deleniti
-                </p>
-              </a>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-              <p class="post__date">Jun 1, 20231</p>
-              <a href="#">
-                <p class="post__title">
-                  Pellentesque felis in ullamcorper erat eget
-                </p>
-              </a>
-              <a href="#">
-                <p class="post__body">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero deleniti
-                </p>
-              </a>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-              <p class="post__date">Jun 1, 20231</p>
-              <a href="#">
-                <p class="post__title">
-                  Pellentesque felis in ullamcorper erat eget
-                </p>
-              </a>
-              <a href="#">
-                <p class="post__body">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero deleniti
-                </p>
-              </a>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-              <p class="post__date">Jun 1, 20231</p>
-              <a href="#">
-                <p class="post__title">
-                  Pellentesque felis in ullamcorper erat eget
-                </p>
-              </a>
-              <a href="#">
-                <p class="post__body">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero deleniti
-                </p>
-              </a>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-              <p class="post__date">Jun 1, 20231</p>
-              <a href="#">
-                <p class="post__title">
-                  Pellentesque felis in ullamcorper erat eget
-                </p>
-              </a>
-              <a href="#">
-                <p class="post__body">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dolorem at necessitatibus rem, vero deleniti
-                </p>
-              </a>
-            </div>
+            <?php while ($row_post = mysqli_fetch_array($query_post)) { ?>
+              <div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
+                <a href="read.php?id=<?= $row_post['id'] ?>">
+                  <img src="./assets/post_image/<?= $row_post['image'] ?>" alt="" class="post__image" />
+                </a>
+                <p class="post__date">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
+                <a href="read.php?id=<?= $row_post['id'] ?>">
+                  <p class="post__title"><?= $row_post['title'] ?></p>
+                </a>
+                <a href="read.php?id=<?= $row_post['id'] ?>">
+                  <p class="post__body wrap">
+                    <?= implode(' ', array_slice(explode(' ', strip_tags($row_post['body'])), 0, 15)); ?>...
+                  </p>
+                </a>
+              </div>
+            <?php } ?>
           </div>
         </article>
         <!-- End Recent Post -->
+        
       </div>
     </main>
 

@@ -18,6 +18,7 @@ $query = mysqli_query($conn, $sql);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
 	<script src="../../style/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.tiny.cloud/1/9u2jycvj0mas1t05212h7sepjnmtmcm9md5teyhi7rnnlcpf/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -72,10 +73,10 @@ $query = mysqli_query($conn, $sql);
 						<input type="text" name="title" id="title" class="input mt-1 mb-2" required>
 
 						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg" required>
+						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg">
 
 						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10" required></textarea>
+						<textarea name="body" id="body" class="input mt-1 mb-2" cols="60" rows="10" required> </textarea>
 
 						<label for="category">Category</label>
 						<select name="category" id="category" class="input mt-1 mb-2" required>
@@ -88,7 +89,7 @@ $query = mysqli_query($conn, $sql);
 						<?php if ($errorMessage) { ?>
 							<p class="error">* <?= $errorMessage ?></p>
 						<?php } ?>
-						<input type="submit" name="submit" value="Publish" class="btn-primary">
+						<input type="submit" name="submit" id="submit" value="Publish" class="btn-primary">
 					</form>
 				</section>
 		</main>
@@ -97,6 +98,13 @@ $query = mysqli_query($conn, $sql);
 			<p>Copyright © <?= date('Y') ?> <a href="#">The Blog</a></p>
 		</footer>
 	</div>
+
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			height: 600,
+		});
+	</script>
 </body>
 
 </html>

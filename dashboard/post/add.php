@@ -12,11 +12,12 @@ if (isset($_POST['submit'])) {
 	$current_date = date('Y-m-d');
 
 	// Start image upload
-	$file_name = rand(1,1000) . $_FILES['image']['name'];
+	$file_name = $_FILES['image']['name'];
+	$file_name_format = rand(1, 1000) . $file_name;
 	$file_size = $_FILES['image']['size'];
 	$tmp = $_FILES['image']['tmp_name'];
 	$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-// return var_dump($file_name);
+
 	if (empty($title) || empty($category) || empty($body) || empty($file_name)) {
 		$errorMessage = "Please fill out all field";
 
