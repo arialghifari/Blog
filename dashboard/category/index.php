@@ -1,13 +1,14 @@
 <?php
 
-include '../connection.php';
+include '../../connection.php';
 
-function getRecordCount($table)
+$sql = "SELECT * FROM category";
+$query = mysqli_query($conn, $sql);
+
+function getCurrentUrl()
 {
-	global $conn;
-	
-	$sql = "SELECT COUNT(*) FROM $table";
-	return mysqli_fetch_array(mysqli_query($conn, $sql))[0];
+	$fullUrl = $_SERVER['REQUEST_URI'];
+	return explode("/", $fullUrl)[4];
 }
 
 ?>
@@ -21,7 +22,7 @@ function getRecordCount($table)
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="../style/main.css" />
+	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
 
@@ -29,7 +30,7 @@ function getRecordCount($table)
 	<div class="container">
 		<!-- Start Top Navigation -->
 		<nav class="nav-main" aria-label="main navigation">
-			<a href="#"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
+			<a href="../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
 				<a href="#">About Us</a>
@@ -40,7 +41,7 @@ function getRecordCount($table)
 
 		<header>
 			<section class="banner">
-				<img src="../assets/banner.jpg" alt="Banner" />
+				<img src="../../assets/banner.jpg" alt="Banner" />
 				<h1 class="display-1">THE BLOG</h1>
 			</section>
 		</header>
@@ -53,13 +54,13 @@ function getRecordCount($table)
 						<p class="manage__title">Manage</p>
 
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<a href="./post/">
+							<a href="../post/">
 								<p>Post</p>
 							</a>
-							<a href="./category/">
-								<p>Category</p>
+							<a href="./">
+								<p class="active">Category</p>
 							</a>
-							<a href="#">
+							<a href="../user/">
 								<p>User</p>
 							</a>
 						</nav>
@@ -67,26 +68,31 @@ function getRecordCount($table)
 				</aside>
 
 				<section class="col-12 col-md-9">
-					<div class="row text-center">
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>Post</p>
-								<h2><?= getRecordCount('post') ?></h2>
-							</div>
-						</div>
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>Category</p>
-								<h2><?= getRecordCount('category') ?></h2>
-							</div>
-						</div>
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>User</p>
-								<h2><?= getRecordCount('user') ?></h2>
-							</div>
-						</div>
-					</div>
+					<a href="./add_form.php" class="btn-primary mb-3">Add Category</a>
+
+					<table class="table">
+						<tr>
+							<th>No</th>
+							<th>Category</th>
+							<th>Action</th>
+						</tr>
+						<?php
+						$no = 1;
+
+						while ($row = mysqli_fetch_array($query)) {
+						?>
+
+							<tr>
+								<th><?= $no ?></th>
+								<td><?= $row['name'] ?></td>
+								<td><a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> | <a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
+							</tr>
+
+						<?php
+							$no++;
+						}
+						?>
+					</table>
 				</section>
 		</main>
 

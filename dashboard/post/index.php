@@ -2,7 +2,10 @@
 
 include '../../connection.php';
 
-$sql = "SELECT * FROM post";
+$sql = "SELECT post.id, post.title, post.created_at, category.name AS 'category.name', user.first_name AS 'author'
+				FROM post
+				INNER JOIN category ON post.id_category = category.id
+				INNER JOIN user ON post.id_user = user.id";
 $query = mysqli_query($conn, $sql);
 
 function getCurrentUrl()
@@ -55,12 +58,12 @@ function getCurrentUrl()
 
 						<nav class="nav-side" aria-label="Manage Navigation">
 							<a href="./">
-								<p class="<?php if (!getCurrentUrl()) echo 'active' ?>">Post</p>
+								<p class="active">Post</p>
 							</a>
-							<a href="#">
-								<p class="">Category</p>
+							<a href="../category/">
+								<p>Category</p>
 							</a>
-							<a href="#">
+							<a href="../user/">
 								<p>User</p>
 							</a>
 						</nav>
@@ -75,6 +78,8 @@ function getCurrentUrl()
 							<th>No</th>
 							<th>Title</th>
 							<th>Category</th>
+							<th>Author</th>
+							<th>Publised At</th>
 							<th>Action</th>
 						</tr>
 						<?php
@@ -86,8 +91,10 @@ function getCurrentUrl()
 							<tr>
 								<th><?= $no ?></th>
 								<td><?= $row['title'] ?></td>
-								<td><?= $row['id_category'] ?></td>
-								<td><a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> | <a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
+								<td><?= $row['category.name'] ?></td>
+								<td><?= $row['author'] ?></td>
+								<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
+								<td><a href="./edit_form.php?id=<?= $row['id'] ?>">view</a> | <a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> | <a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
 							</tr>
 
 						<?php

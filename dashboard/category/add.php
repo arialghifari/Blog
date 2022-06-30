@@ -3,13 +3,10 @@
 include "../../connection.php";
 
 if (isset($_POST['submit'])) {
-	$title = $_POST['title'];
-	$image = $_POST['image'];
-	$body = $_POST['body'];
-	$category = $_POST['category'];
+	$name = $_POST['name'];
 	$current_date = date('Y-m-d');
 
-	$sql = "INSERT INTO post VALUES ('', '$title', '$body', 'img2.jpg', '1', '$category', '$current_date')";
+	$sql = "INSERT INTO category VALUES ('', '$name', '$current_date')";
 
 	if (mysqli_query($conn, $sql)) {
 		header("Location: ./");

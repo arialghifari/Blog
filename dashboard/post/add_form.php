@@ -1,3 +1,12 @@
+<?php
+
+include "../../connection.php";
+
+$sql = "SELECT * FROM category ORDER BY name";
+$query = mysqli_query($conn, $sql);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,10 +51,10 @@
 							<a href="./">
 								<p>Post</p>
 							</a>
-							<a href="#">
+							<a href="../category/">
 								<p>Category</p>
 							</a>
-							<a href="#">
+							<a href="../user/">
 								<p>User</p>
 							</a>
 						</nav>
@@ -68,8 +77,10 @@
 
 						<label for="category">Category</label>
 						<select name="category" id="category" class="input mt-1 mb-2">
-							<option value="Technology">Technology</option>
-							<option value="Lifestyle">Lifestyle</option>
+							<option disabled selected>Choose</option>
+							<?php while($row = mysqli_fetch_array($query)) { ?>
+								<option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+							<?php } ?>
 						</select>
 
 						<input type="submit" name="submit" value="Publish" class="btn-primary">

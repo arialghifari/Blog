@@ -53,10 +53,10 @@ $row = mysqli_fetch_array(mysqli_query($conn, $sql));
 							<a href="./">
 								<p>Post</p>
 							</a>
-							<a href="#">
+							<a href="../category/">
 								<p>Category</p>
 							</a>
-							<a href="#">
+							<a href="../user/">
 								<p>User</p>
 							</a>
 						</nav>

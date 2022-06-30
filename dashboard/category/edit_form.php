@@ -1,14 +1,11 @@
 <?php
 
-include '../connection.php';
+include "../../connection.php";
 
-function getRecordCount($table)
-{
-	global $conn;
-	
-	$sql = "SELECT COUNT(*) FROM $table";
-	return mysqli_fetch_array(mysqli_query($conn, $sql))[0];
-}
+$id = $_GET['id'];
+$sql = "SELECT * FROM category WHERE id='$id'";
+
+$row = mysqli_fetch_array(mysqli_query($conn, $sql));
 
 ?>
 
@@ -21,7 +18,7 @@ function getRecordCount($table)
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="../style/main.css" />
+	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
 
@@ -29,7 +26,7 @@ function getRecordCount($table)
 	<div class="container">
 		<!-- Start Top Navigation -->
 		<nav class="nav-main" aria-label="main navigation">
-			<a href="#"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
+			<a href="../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
 				<a href="#">About Us</a>
@@ -40,26 +37,26 @@ function getRecordCount($table)
 
 		<header>
 			<section class="banner">
-				<img src="../assets/banner.jpg" alt="Banner" />
+				<img src="../../assets/banner.jpg" alt="Banner" />
 				<h1 class="display-1">THE BLOG</h1>
 			</section>
 		</header>
 
 		<main>
-			<div class="row my-5">
+			<div class="row my-4">
 				<!-- Start Aside -->
 				<aside class="col-12 col-md-3 mb-4">
 					<div class="manage">
 						<p class="manage__title">Manage</p>
 
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<a href="./post/">
+							<a href="../post/">
 								<p>Post</p>
 							</a>
-							<a href="./category/">
+							<a href="./">
 								<p>Category</p>
 							</a>
-							<a href="#">
+							<a href="../user/">
 								<p>User</p>
 							</a>
 						</nav>
@@ -67,26 +64,17 @@ function getRecordCount($table)
 				</aside>
 
 				<section class="col-12 col-md-9">
-					<div class="row text-center">
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>Post</p>
-								<h2><?= getRecordCount('post') ?></h2>
-							</div>
-						</div>
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>Category</p>
-								<h2><?= getRecordCount('category') ?></h2>
-							</div>
-						</div>
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>User</p>
-								<h2><?= getRecordCount('user') ?></h2>
-							</div>
-						</div>
-					</div>
+					<h3>Edit Post</h3>
+					<hr>
+
+					<form action="./update.php" method="post">
+						<input type="hidden" name="id" value="<?= $row['id'] ?>" class="input mt-1 mb-2">
+
+						<label for="name">Category Name</label>
+						<input type="text" name="name" id="name" value="<?= $row['name'] ?>" class="input mt-1 mb-2">
+
+						<input type="submit" name="submit" value="Update" class="btn-primary">
+					</form>
 				</section>
 		</main>
 
