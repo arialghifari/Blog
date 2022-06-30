@@ -5,6 +5,8 @@ include "../../connection.php";
 $sql = "SELECT * FROM category ORDER BY name";
 $query = mysqli_query($conn, $sql);
 
+@$errorMessage = $_GET['err'];
+
 ?>
 
 <!DOCTYPE html>
@@ -14,8 +16,8 @@ $query = mysqli_query($conn, $sql);
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
+	<script src="../../style/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -65,24 +67,27 @@ $query = mysqli_query($conn, $sql);
 					<h3>Add Post</h3>
 					<hr>
 
-					<form action="./add.php" method="post">
+					<form action="./add.php" method="post" enctype="multipart/form-data">
 						<label for="title">Title</label>
-						<input type="text" name="title" id="title" class="input mt-1 mb-2">
+						<input type="text" name="title" id="title" class="input mt-1 mb-2" required>
 
 						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2">
+						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg" required>
 
 						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10"></textarea>
+						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10" required></textarea>
 
 						<label for="category">Category</label>
-						<select name="category" id="category" class="input mt-1 mb-2">
+						<select name="category" id="category" class="input mt-1 mb-2" required>
 							<option disabled selected>Choose</option>
-							<?php while($row = mysqli_fetch_array($query)) { ?>
+							<?php while ($row = mysqli_fetch_array($query)) { ?>
 								<option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
 							<?php } ?>
 						</select>
 
+						<?php if ($errorMessage) { ?>
+							<p class="error">* <?= $errorMessage ?></p>
+						<?php } ?>
 						<input type="submit" name="submit" value="Publish" class="btn-primary">
 					</form>
 				</section>

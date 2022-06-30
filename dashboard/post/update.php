@@ -6,8 +6,9 @@ if (isset($_POST['submit'])) {
 	$id = $_POST['id'];
 	$title = $_POST['title'];
 	$body = $_POST['body'];
+	$category = $_POST['category'];
 
-	$sql = "UPDATE post SET title='$title', body='$body' WHERE id='$id'";
+	$sql = "UPDATE post SET title='$title', body='$body', id_category='$category' WHERE id='$id'";
 
 	if (mysqli_query($conn, $sql)) {
 		header("Location: ./");

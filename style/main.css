@@ -1,4 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=PT+Serif&family=Playfair+Display:wght@900&family=Poppins&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=PT+Serif&family=Playfair+Display:wght@900&family=Poppins&display=swap"); */
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("./font/PlayfairDisplay-Black.ttf");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./font/Poppins-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./font/Poppins-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "PT Serif";
+  src: url("./font/PTSerif-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "PT Serif";
+  src: url("./font/PTSerif-Bold.ttf");
+  font-weight: bold;
+}
 
 :root {
   --background: #f6f5f1;
@@ -59,12 +88,12 @@ aside * {
 }
 
 .category__title {
-  font-weight: 600;
+  font-weight: bold;
   margin: 32px 0 20px 0;
 }
 
 .manage__title {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .active {
@@ -178,6 +207,10 @@ article {
   color: var(--dark);
   border: 1px solid var(--dark);
   padding: 12px 0;
+}
+
+.error {
+  color: red;
 }
 
 footer {
