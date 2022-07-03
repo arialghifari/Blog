@@ -91,7 +91,7 @@ $query_post = mysqli_query($conn, $sql_post);
 						<p class="title-post">Category "<?= $category_name ?>"</p>
 					<?php } ?>
 					<div class="row mb-3">
-						<p><?php if (mysqli_num_rows($query_post) <= 0) echo 'No post found' ?></p>
+						<?php if (mysqli_num_rows($query_post) <= 0) { ?> <p>No post found</p> <?php } ?>
 						<?php while ($row_post = mysqli_fetch_array($query_post)) { ?>
 							<div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
 								<a href="read.php?id=<?= $row_post['id'] ?>">

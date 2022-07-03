@@ -95,7 +95,7 @@ function getCurrentUrl()
 								<td><?= $row['author'] ?></td>
 								<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
 								<td>
-									<a href="../../read.php?id=<?= $row['id'] ?>">view</a> |
+									<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank">view</a> |
 									<a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> |
 									<a href="./delete.php?id=<?= $row['id'] ?>">delete</a>
 								</td>

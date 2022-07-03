@@ -30,7 +30,7 @@
 }
 
 :root {
-  --background: #f6f5f1;
+  --background: #f7f7f7;
   --soft: #d3d2cc;
   --active: #efead7;
   --dark: #474747;
@@ -234,8 +234,9 @@ article {
 
 .read p {
   font-size: 20px;
-  line-height: 165%;
+  line-height: 175%;
   color: var(--darker);
+  margin-bottom: 24px;
 }
 
 .read__title {
@@ -248,7 +249,7 @@ article {
   border: 1px solid var(--dark);
   padding: 4px 20px;
   text-align: center;
-  background-color: #ede9d9;
+  background-color: var(--active);
   font-size: 16px !important;
   cursor: pointer;
   transition: all 0.1s;
@@ -259,7 +260,7 @@ article {
 
 .read__category:hover {
   background-color: var(--dark);
-  color: #ede9d9;
+  color: var(--active);
 }
 
 .read__image {
