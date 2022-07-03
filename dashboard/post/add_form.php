@@ -73,7 +73,7 @@ $query = mysqli_query($conn, $sql);
 						<input type="text" name="title" id="title" class="input mt-1 mb-2" required>
 
 						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg">
+						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg, image/webp">
 
 						<label for="body">Body</label>
 						<textarea name="body" id="body" class="input mt-1 mb-2" cols="60" rows="10" required> </textarea>
@@ -82,7 +82,7 @@ $query = mysqli_query($conn, $sql);
 						<select name="category" id="category" class="input mt-1 mb-2" required>
 							<option disabled selected>Choose</option>
 							<?php while ($row = mysqli_fetch_array($query)) { ?>
-								<option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+								<option value="<?= $row['name'] ?>"><?= $row['name'] ?></option>
 							<?php } ?>
 						</select>
 

@@ -6,8 +6,10 @@ $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
 
 $sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
-				FROM post
-				LEFT JOIN user ON post.id_user = user.id";
+            FROM post
+            LEFT JOIN user ON post.id_user = user.id
+            ORDER BY id DESC
+            LIMIT 6";
 $query_post = mysqli_query($conn, $sql_post);
 
 ?>
@@ -144,7 +146,7 @@ $query_post = mysqli_query($conn, $sql_post);
             <p class="category__title">Blog Categories</p>
 
             <nav class="nav-side" aria-label="Category Navigation">
-              <a href="category.php?name=*">
+              <a href="category.php?name=All">
                 <p>View All</p>
               </a>
               <?php while ($row = mysqli_fetch_array($query_category)) { ?>
@@ -165,12 +167,8 @@ $query_post = mysqli_query($conn, $sql_post);
               <div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
                 <a href="read.php?id=<?= $row_post['id'] ?>">
                   <img src="./assets/post_image/<?= $row_post['image'] ?>" alt="" class="post__image" />
-                </a>
-                <p class="post__date">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
-                <a href="read.php?id=<?= $row_post['id'] ?>">
+                  <p class="post__date mt-2">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
                   <p class="post__title"><?= $row_post['title'] ?></p>
-                </a>
-                <a href="read.php?id=<?= $row_post['id'] ?>">
                   <p class="post__body wrap">
                     <?= implode(' ', array_slice(explode(' ', strip_tags($row_post['body'])), 0, 15)); ?>...
                   </p>
@@ -180,7 +178,7 @@ $query_post = mysqli_query($conn, $sql_post);
           </div>
         </article>
         <!-- End Recent Post -->
-        
+
       </div>
     </main>
 

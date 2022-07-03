@@ -1,3 +1,20 @@
+<?php
+
+include './connection.php';
+
+$id = $_GET['id'];
+
+$sql_category = "SELECT * FROM category ORDER BY name";
+$query_category = mysqli_query($conn, $sql_category);
+
+$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, post.category, user.first_name AS 'author'
+						FROM post
+						LEFT JOIN user ON post.id_user = user.id
+						WHERE post.id='$id'";
+$row_post = mysqli_fetch_array(mysqli_query($conn, $sql_post));
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,14 +25,14 @@
 	<link rel="stylesheet" href="./style/bootstrap.min.css" />
 	<script src="./style/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="./style/main.css" />
-	<title>The Blog</title>
+	<title><?= $row_post['title'] ?> — The Blog</title>
 </head>
 
 <body>
 	<div class="container">
 		<!-- Start Top Navigation -->
 		<nav class="nav-main" aria-label="main navigation">
-			<a href="#"><img src="./assets/logo.svg" alt="The Blog Logo" /></a>
+			<a href="./"><img src="./assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
 				<a href="#">About Us</a>
@@ -32,140 +49,28 @@
 		</header>
 
 		<main>
-			<div class="row mt-0 mt-md-5">
-				<!-- Start Aside -->
-				<aside class="col-12 col-md-3 mb-4">
-					<div class="category">
-						<p class="manage__title">Blog Categories</p>
-
-						<nav class="nav-side" aria-label="Category Navigation">
-							<a href="#">
-								<p class="active">View All</p>
-							</a>
-							<a href="#">
-								<p>Technology</p>
-							</a>
-							<a href="#">
-								<p>Intermezzo</p>
-							</a>
-							<a href="#">
-								<p>Politics</p>
-							</a>
-							<a href="#">
-								<p>Lifestyle</p>
-							</a>
-							<a href="#">
-								<p>Food</p>
-							</a>
-						</nav>
+			<!-- Start Post -->
+			<article class="row read d-flex justify-content-center">
+				<div class="col-md-8">
+					<div class="row mt-5 mb-2">
+						<h2 class="read__title"><?= $row_post['title'] ?></h2>
 					</div>
-				</aside>
-				<!-- End Aside -->
-
-				<!-- Start Recent Post -->
-				<article class="col-12 col-md-9 post">
-					<p class="title-post">Recent Post</p>
-					<div class="row mb-3">
-						<div class="col-12 col-md-6 col-lg-4 mb-3">
-							<a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-							<p class="post__date">Jun 1, 20231</p>
-							<a href="#">
-								<p class="post__title">Pellentesque felis</p>
-							</a>
-							<a href="#">
-								<p class="post__body">
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero delenitiLorem ipsum
-									dolor sit amet consectetur, adipisicing elit. Dolorem at
-									necessitatibus rem, vero delenitiLorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero deleniti
-								</p>
-							</a>
-						</div>
-
-						<div class="col-12 col-md-6 col-lg-4 mb-3">
-							<a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-							<p class="post__date">Jun 1, 20231</p>
-							<a href="#">
-								<p class="post__title">
-									Pellentesque felis in ullamcorper erat eget
-								</p>
-							</a>
-							<a href="#">
-								<p class="post__body">
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero deleniti
-								</p>
-							</a>
-						</div>
-
-						<div class="col-12 col-md-6 col-lg-4 mb-3">
-							<a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-							<p class="post__date">Jun 1, 20231</p>
-							<a href="#">
-								<p class="post__title">
-									Pellentesque felis in ullamcorper erat eget
-								</p>
-							</a>
-							<a href="#">
-								<p class="post__body">
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero deleniti
-								</p>
-							</a>
-						</div>
-
-						<div class="col-12 col-md-6 col-lg-4 mb-3">
-							<a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-							<p class="post__date">Jun 1, 20231</p>
-							<a href="#">
-								<p class="post__title">
-									Pellentesque felis in ullamcorper erat eget
-								</p>
-							</a>
-							<a href="#">
-								<p class="post__body">
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero deleniti
-								</p>
-							</a>
-						</div>
-
-						<div class="col-12 col-md-6 col-lg-4 mb-3">
-							<a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-							<p class="post__date">Jun 1, 20231</p>
-							<a href="#">
-								<p class="post__title">
-									Pellentesque felis in ullamcorper erat eget
-								</p>
-							</a>
-							<a href="#">
-								<p class="post__body">
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero deleniti
-								</p>
-							</a>
-						</div>
-
-						<div class="col-12 col-md-6 col-lg-4 mb-3">
-							<a href="#"><img src="./assets/img2.jpg" alt="" class="post__image" /></a>
-							<p class="post__date">Jun 1, 20231</p>
-							<a href="#">
-								<p class="post__title">
-									Pellentesque felis in ullamcorper erat eget
-								</p>
-							</a>
-							<a href="#">
-								<p class="post__body">
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-									Dolorem at necessitatibus rem, vero deleniti
-								</p>
-							</a>
+					<div class="row m-0">
+						<img class="read__image" src="./assets/post_image/<?= $row_post['image'] ?>" alt="">
+					</div>
+					<div class="row mt-3">
+						<div class="col d-block d-md-flex justify-content-between align-items-center">
+							<p class="m-0">Author <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
+							<p class="read__category m-0"><?= $row_post['category'] ?></p>
 						</div>
 					</div>
-				</article>
-				<!-- End Recent Post -->
-			</div>
+					<hr />
+					<div class="row">
+						<?= $row_post['body'] ?>
+					</div>
+				</div>
+			</article>
+			<!-- End Post -->
 		</main>
 
 		<footer>

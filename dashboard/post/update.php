@@ -35,8 +35,8 @@ if (isset($_POST['submit'])) {
 		$tmp = $_FILES['image']['tmp_name'];
 		$extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-		if ($extension != 'jpg' && $extension != 'jpeg' && $extension != 'png') {
-			$errorMessage = "Please choose jpg, jpeg, or png file";
+		if ($extension != 'jpg' && $extension != 'jpeg' && $extension != 'png' && $extension != 'webp') {
+			$errorMessage = "Please choose jpg, jpeg, png, or webp file";
 
 			return header("Location: ./edit_form.php?id=$id&err=$errorMessage");
 		};
@@ -50,9 +50,9 @@ if (isset($_POST['submit'])) {
 		move_uploaded_file($tmp, "../../assets/post_image/" . $file_name_format);
 		// End image upload
 
-		$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', id_category='$category' WHERE id='$id'";
+		$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category' WHERE id='$id'";
 	} else {
-		$sql = "UPDATE post SET title='$title', body='$body', id_category='$category' WHERE id='$id'";
+		$sql = "UPDATE post SET title='$title', body='$body', category='$category' WHERE id='$id'";
 	}
 
 

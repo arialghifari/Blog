@@ -80,8 +80,8 @@ $query_category = mysqli_query($conn, $sql_category);
 
 						<label for="image">Image</label>
 						<img src="../../assets/post_image/<?= $row['image'] ?>" class="preview__image" alt="" />
-						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg">
-						<p><small>* Choose image if you want to change</small></p>
+						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/webp, image/png, image/jpg, image/jpeg">
+						<p><small>* Leave this blank if you don't want to change the image</small></p>
 
 						<label for="body">Body</label>
 						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10" required><?= $row['body'] ?></textarea>
@@ -90,7 +90,7 @@ $query_category = mysqli_query($conn, $sql_category);
 						<select name="category" id="category" class="input mt-1 mb-2" required>
 							<option disabled>Choose</option>
 							<?php while ($row_category = mysqli_fetch_array($query_category)) { ?>
-								<option value="<?= $row_category['id'] ?>" <?php if ($row_category['id'] == $row['id_category']) echo 'selected' ?>>
+								<option value="<?= $row_category['name'] ?>" <?php if ($row_category['name'] == $row['category']) echo 'selected' ?>>
 									<?= $row_category['name'] ?>
 								</option>
 							<?php } ?>

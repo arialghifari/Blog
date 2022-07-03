@@ -24,8 +24,8 @@ if (isset($_POST['submit'])) {
 		return header("Location: ./add_form.php?err=$errorMessage");
 	};
 
-	if ($extension != 'jpg' && $extension != 'jpeg' && $extension != 'png') {
-		$errorMessage = "Please choose jpg, jpeg, or png file";
+	if ($extension != 'jpg' && $extension != 'jpeg' && $extension != 'png' && $extension != 'webp') {
+		$errorMessage = "Please choose jpg, jpeg, png, or webp file";
 
 		return header("Location: ./add_form.php?err=$errorMessage");
 	};

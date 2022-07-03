@@ -204,13 +204,17 @@ article {
   text-decoration: none;
   font-weight: bold;
   color: var(--darker);
-  font-size: 22px;
+  font-size: 18px;
   margin: 4px 0 0 0;
 }
 
 .post__body {
   margin: 4px 0 0 0;
   color: var(--dark);
+}
+
+.card-post a:hover > .post__title {
+  text-decoration: underline;
 }
 
 .card-dashboard {
@@ -226,6 +230,33 @@ article {
 .tox {
   border: 1px solid var(--dark) !important;
   border-radius: 0 !important;
+}
+
+.read p {
+  font-size: 20px;
+  line-height: 165%;
+  color: var(--darker);
+}
+
+.read__title {
+  font-family: Poppins, sans-serif;
+  line-height: 130%;
+  font-weight: bold;
+}
+
+.read__category {
+  border: 1px solid var(--dark);
+  padding: 0px 20px;
+  text-align: center;
+  background-color: #ede9d9;
+  font-size: 16px !important;
+}
+
+.read__image {
+  background-color: var(--darker);
+  max-height: 280px;
+  object-fit: contain;
+  object-position: center;
 }
 
 footer {
@@ -252,6 +283,10 @@ footer a:hover {
 
   .preview__image {
     height: 400px;
+  }
+
+  .read__image {
+    max-height: 460px;
   }
 }
 
