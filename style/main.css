@@ -246,10 +246,20 @@ article {
 
 .read__category {
   border: 1px solid var(--dark);
-  padding: 0px 20px;
+  padding: 4px 20px;
   text-align: center;
   background-color: #ede9d9;
   font-size: 16px !important;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-decoration: none;
+  color: var(--dark);
+  text-decoration: none;
+}
+
+.read__category:hover {
+  background-color: var(--dark);
+  color: #ede9d9;
 }
 
 .read__image {

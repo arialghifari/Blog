@@ -2,23 +2,16 @@
 
 include './connection.php';
 
-$category_name = $_GET['name'];
+$search_term = $_GET['name'];
 
 $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
 
-if ($category_name == 'All') {
-	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
-							FROM post
-							LEFT JOIN user ON post.id_user = user.id
-							ORDER BY id DESC";
-} else {
-	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
-								FROM post
-								LEFT JOIN user ON post.id_user = user.id
-								WHERE category = '$category_name'
-								ORDER BY id DESC";
-}
+$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
+						FROM post
+						LEFT JOIN user ON post.id_user = user.id
+						WHERE post.title LIKE '%$search_term%'
+						ORDER BY id DESC";
 $query_post = mysqli_query($conn, $sql_post);
 
 ?>
@@ -61,7 +54,7 @@ $query_post = mysqli_query($conn, $sql_post);
 				<!-- Start Aside -->
 				<aside class="col-12 col-md-3 mt-5 mb-4">
 					<form action="./search.php" method="get" class="search">
-						<input type="text" name="name" class="input" placeholder="Search" />
+						<input type="text" name="name" class="input" placeholder="Search" value="<?= $search_term ?>" />
 
 						<img src="./assets/ic_search.svg" alt="" />
 					</form>
@@ -71,11 +64,11 @@ $query_post = mysqli_query($conn, $sql_post);
 
 						<nav class="nav-side" aria-label="Category Navigation">
 							<a href="category.php?name=All">
-								<p class="<?php if ($category_name == 'All') echo 'active' ?>">View All</p>
+								<p>View All</p>
 							</a>
 							<?php while ($row = mysqli_fetch_array($query_category)) { ?>
 								<a href="category.php?name=<?= $row['name'] ?>">
-									<p class='<?php if ($category_name == $row['name']) echo 'active' ?>'><?= $row['name'] ?></p>
+									<p><?= $row['name'] ?></p>
 								</a>
 							<?php } ?>
 						</nav>
@@ -85,11 +78,7 @@ $query_post = mysqli_query($conn, $sql_post);
 
 				<!-- Start Recent Post -->
 				<article class="col-12 col-md-9 post">
-					<?php if ($category_name == 'All') { ?>
-						<p class="title-post">All Post</p>
-					<?php } else { ?>
-						<p class="title-post">Category "<?= $category_name ?>"</p>
-					<?php } ?>
+					<p class="title-post">Search for "<?= $search_term ?>"</p>
 					<div class="row mb-3">
 						<p><?php if (mysqli_num_rows($query_post) <= 0) echo 'No post found' ?></p>
 						<?php while ($row_post = mysqli_fetch_array($query_post)) { ?>

@@ -136,8 +136,8 @@ $query_post = mysqli_query($conn, $sql_post);
       <div class="row mt-0 mt-md-5">
         <!-- Start Aside -->
         <aside class="col-12 col-md-3 mt-5 mb-4">
-          <form action="" method="post" class="search">
-            <input type="text" name="search" class="input" placeholder="Search" />
+          <form action="./search.php" method="get" class="search">
+            <input type="text" name="name" class="input" placeholder="Search" />
 
             <img src="./assets/ic_search.svg" alt="" />
           </form>
@@ -167,7 +167,7 @@ $query_post = mysqli_query($conn, $sql_post);
               <div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
                 <a href="read.php?id=<?= $row_post['id'] ?>">
                   <img src="./assets/post_image/<?= $row_post['image'] ?>" alt="" class="post__image" />
-                  <p class="post__date mt-2">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
+                  <p class="post__date pt-2 m-0">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
                   <p class="post__title"><?= $row_post['title'] ?></p>
                   <p class="post__body wrap">
                     <?= implode(' ', array_slice(explode(' ', strip_tags($row_post['body'])), 0, 15)); ?>...
