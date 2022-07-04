@@ -73,41 +73,44 @@ function getCurrentUrl()
 				<section class="col-12 col-md-9">
 					<a href="./add_form.php" class="btn-primary mb-3">Add Post</a>
 
-					<table class="table">
-						<tr>
-							<th>No</th>
-							<th>Title</th>
-							<th>Category</th>
-							<th>Author</th>
-							<th>Publised At</th>
-							<th class="text-center">Action</th>
-						</tr>
-						<?php
-						$no = 1;
-
-						while ($row = mysqli_fetch_array($query)) {
-						?>
-
+					<div class="overflow-auto">
+						<table class="table">
 							<tr>
-								<th><?= $no ?></th>
-								<td><?= $row['title'] ?></td>
-								<td><?= $row['category'] ?></td>
-								<td><?= $row['author'] ?></td>
-								<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
-								<td>
-									<div class="d-flex justify-content-center align-items-center gap-2">
-										<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
-										<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
-										<a href="./delete.php?id=<?= $row['id'] ?>" title="delete"><img src="../../assets/ic_trash.svg" alt="" /></a>
-									</div>
-								</td>
+								<th>No</th>
+								<th>Title</th>
+								<th>Category</th>
+								<th>Author</th>
+								<th>Publised At</th>
+								<th class="text-center">Action</th>
 							</tr>
+							<?php
+							$no = 1;
 
-						<?php
-							$no++;
-						}
-						?>
-					</table>
+							while ($row = mysqli_fetch_array($query)) {
+								$title = $row['title'];
+							?>
+
+								<tr>
+									<th><?= $no ?></th>
+									<td><?= $row['title'] ?></td>
+									<td><?= $row['category'] ?></td>
+									<td><?= $row['author'] ?></td>
+									<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
+									<td>
+										<div class="d-flex justify-content-center align-items-center gap-2">
+											<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
+											<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
+											<a href="./delete.php?id=<?= $row['id'] ?>" title="delete" onclick="return confirm('Do you want to delete <?= $title ?> post?')"><img src="../../assets/ic_trash.svg" alt="" /></a>
+										</div>
+									</td>
+								</tr>
+
+							<?php
+								$no++;
+							}
+							?>
+						</table>
+					</div>
 				</section>
 		</main>
 

@@ -70,34 +70,37 @@ function getCurrentUrl()
 				<section class="col-12 col-md-9">
 					<a href="./add_form.php" class="btn-primary mb-3">Add Category</a>
 
-					<table class="table">
-						<tr>
-							<th>No</th>
-							<th>Category</th>
-							<th class="text-center">Action</th>
-						</tr>
-						<?php
-						$no = 1;
-
-						while ($row = mysqli_fetch_array($query)) {
-						?>
-
+					<div class="overflow-auto">
+						<table class="table">
 							<tr>
-								<th><?= $no ?></th>
-								<td><?= $row['name'] ?></td>
-								<td>
-									<div class="d-flex justify-content-center align-items-center gap-2">
-										<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
-										<a href="./delete.php?id=<?= $row['id'] ?>" title="delete"><img src="../../assets/ic_trash.svg" alt="" /></a>
-									</div>
-								</td>
+								<th>No</th>
+								<th>Category</th>
+								<th class="text-center">Action</th>
 							</tr>
+							<?php
+							$no = 1;
 
-						<?php
-							$no++;
-						}
-						?>
-					</table>
+							while ($row = mysqli_fetch_array($query)) {
+								$name = $row['name'];
+							?>
+
+								<tr>
+									<th><?= $no ?></th>
+									<td><?= $row['name'] ?></td>
+									<td>
+										<div class="d-flex justify-content-center align-items-center gap-2">
+											<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
+											<a href="./delete.php?id=<?= $row['id'] ?>" title="delete" onclick="return confirm('Do you want to delete <?= $name ?> category?')"><img src="../../assets/ic_trash.svg" alt="" /></a>
+										</div>
+									</td>
+								</tr>
+
+							<?php
+								$no++;
+							}
+							?>
+						</table>
+					</div>
 				</section>
 		</main>
 

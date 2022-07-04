@@ -302,8 +302,7 @@ article {
 }
 
 .read__category:hover {
-  background-color: var(--dark);
-  color: var(--active);
+  color: var(--dark);
 }
 
 .read__image {
@@ -314,7 +313,7 @@ article {
 }
 
 table a {
-  width: 40px;
+  width: 42px;
   padding: 4px 12px;
   background-color: var(--active);
 }
