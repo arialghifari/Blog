@@ -21,7 +21,7 @@ function getCurrentUrl()
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
-  <script src="../../style/bootstrap.bundle.min.js"></script>
+	<script src="../../style/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -74,7 +74,7 @@ function getCurrentUrl()
 						<tr>
 							<th>No</th>
 							<th>Category</th>
-							<th>Action</th>
+							<th class="text-center">Action</th>
 						</tr>
 						<?php
 						$no = 1;
@@ -85,7 +85,12 @@ function getCurrentUrl()
 							<tr>
 								<th><?= $no ?></th>
 								<td><?= $row['name'] ?></td>
-								<td><a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> | <a href="./delete.php?id=<?= $row['id'] ?>">delete</a></td>
+								<td>
+									<div class="d-flex justify-content-center align-items-center gap-2">
+										<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
+										<a href="./delete.php?id=<?= $row['id'] ?>" title="delete"><img src="../../assets/ic_trash.svg" alt="" /></a>
+									</div>
+								</td>
 							</tr>
 
 						<?php

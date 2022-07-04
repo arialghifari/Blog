@@ -313,6 +313,25 @@ article {
   object-position: center;
 }
 
+table a {
+  width: 40px;
+  padding: 4px 12px;
+  background-color: var(--active);
+}
+
+table a:hover {
+  background-color: var(--dark);
+}
+
+table a:hover > img {
+  filter: brightness(100);
+}
+
+table img {
+  color: red;
+  width: 100%;
+}
+
 footer {
   display: flex;
   justify-content: center;

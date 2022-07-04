@@ -80,7 +80,7 @@ function getCurrentUrl()
 							<th>Category</th>
 							<th>Author</th>
 							<th>Publised At</th>
-							<th>Action</th>
+							<th class="text-center">Action</th>
 						</tr>
 						<?php
 						$no = 1;
@@ -95,9 +95,11 @@ function getCurrentUrl()
 								<td><?= $row['author'] ?></td>
 								<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
 								<td>
-									<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank">view</a> |
-									<a href="./edit_form.php?id=<?= $row['id'] ?>">edit</a> |
-									<a href="./delete.php?id=<?= $row['id'] ?>">delete</a>
+									<div class="d-flex justify-content-center align-items-center gap-2">
+										<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
+										<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
+										<a href="./delete.php?id=<?= $row['id'] ?>" title="delete"><img src="../../assets/ic_trash.svg" alt="" /></a>
+									</div>
 								</td>
 							</tr>
 
