@@ -11,7 +11,7 @@ $sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at,
 						FROM post
 						LEFT JOIN user ON post.id_user = user.id
 						WHERE post.title LIKE '%$search_term%'
-						ORDER BY id DESC";
+						ORDER BY created_at DESC";
 $query_post = mysqli_query($conn, $sql_post);
 
 ?>

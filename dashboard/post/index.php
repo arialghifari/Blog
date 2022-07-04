@@ -5,7 +5,7 @@ include '../../connection.php';
 $sql = "SELECT post.id, post.title, post.created_at, post.category, user.first_name AS 'author'
 				FROM post
 				LEFT JOIN user ON post.id_user = user.id
-				ORDER BY id DESC";
+				ORDER BY created_at DESC";
 $query = mysqli_query($conn, $sql);
 
 function getCurrentUrl()

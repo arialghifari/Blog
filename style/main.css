@@ -232,11 +232,54 @@ article {
   border-radius: 0 !important;
 }
 
+.read > * {
+  color: var(--darker);
+}
+
 .read p {
   font-size: 20px;
   line-height: 175%;
-  color: var(--darker);
-  margin-bottom: 24px;
+  margin: 16px 0 0 0;
+}
+
+.read h1,
+.read h2,
+.read h3,
+.read h4,
+.read h5,
+.read h6 {
+  font-family: Poppins, sans-serif;
+  font-weight: bold;
+}
+
+.read h1 {
+  font-size: 32px;
+  margin: 48px 0 0 0;
+}
+
+.read h2 {
+  font-size: 22px;
+  margin: 32px 0 0 0;
+}
+
+.read h3,
+.read h4,
+.read h5,
+.read h6 {
+  font-size: 20px;
+  margin: 20px 0 0 0;
+}
+
+.read ol,
+.read ul {
+  font-size: 20px;
+  list-style-position: outside;
+  border-left: 22px solid transparent;
+}
+
+.read ol li,
+.read ul li {
+  margin: 16px 0 0 0;
 }
 
 .read__title {

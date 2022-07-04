@@ -53,9 +53,9 @@ $row_post = mysqli_fetch_array(mysqli_query($conn, $sql_post));
 			<article class="row read d-flex justify-content-center">
 				<div class="col-md-8">
 					<div class="row mt-5 mb-2">
-						<h2 class="read__title"><?= $row_post['title'] ?></h2>
+						<h1 class="read__title"><?= $row_post['title'] ?></h1>
 					</div>
-					<div class="row m-0">
+					<div class="row m-0 mt-3">
 						<img class="read__image" src="./assets/post_image/<?= $row_post['image'] ?>" alt="">
 					</div>
 					<div class="row mt-3">

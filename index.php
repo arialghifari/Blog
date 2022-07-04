@@ -8,7 +8,7 @@ $query_category = mysqli_query($conn, $sql_category);
 $sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
             FROM post
             LEFT JOIN user ON post.id_user = user.id
-            ORDER BY id DESC
+            ORDER BY created_at DESC
             LIMIT 6";
 $query_post = mysqli_query($conn, $sql_post);
 

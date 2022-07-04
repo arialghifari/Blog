@@ -11,13 +11,13 @@ if ($category_name == 'All') {
 	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
 							FROM post
 							LEFT JOIN user ON post.id_user = user.id
-							ORDER BY id DESC";
+							ORDER BY created_at DESC";
 } else {
 	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
 								FROM post
 								LEFT JOIN user ON post.id_user = user.id
 								WHERE category = '$category_name'
-								ORDER BY id DESC";
+								ORDER BY created_at DESC";
 }
 $query_post = mysqli_query($conn, $sql_post);
 

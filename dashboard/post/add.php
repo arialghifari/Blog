@@ -9,7 +9,8 @@ if (isset($_POST['submit'])) {
 	$title = $_POST['title'];
 	$body = $_POST['body'];
 	$category = $_POST['category'];
-	$current_date = date('Y-m-d');
+	$date = new DateTime();
+	$current_date = $date->format('Y-m-d H:i:s');
 
 	// Start image upload
 	$file_name = $_FILES['image']['name'];
