@@ -78,13 +78,16 @@ $query = mysqli_query($conn, $sql);
 						<label for="body">Body</label>
 						<textarea name="body" id="body" class="input mt-1 mb-2" cols="60" rows="10" required> </textarea>
 
-						<label for="category">Category</label>
+						<label for="category" class="mt-2">Category</label>
 						<select name="category" id="category" class="input mt-1 mb-2" required>
 							<option disabled selected>Choose</option>
 							<?php while ($row = mysqli_fetch_array($query)) { ?>
 								<option value="<?= $row['name'] ?>"><?= $row['name'] ?></option>
 							<?php } ?>
 						</select>
+
+						<input type="checkbox" name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
+						<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
 
 						<?php if ($errorMessage) { ?>
 							<p class="error">* <?= $errorMessage ?></p>

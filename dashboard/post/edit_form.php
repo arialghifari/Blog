@@ -96,6 +96,9 @@ $query_category = mysqli_query($conn, $sql_category);
 							<?php } ?>
 						</select>
 
+						<input type="checkbox" <?= $row['isMain'] == 1 ? "checked" : "" ?> name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
+						<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
+
 						<?php if ($errorMessage) { ?>
 							<p class="error">* <?= $errorMessage ?></p>
 						<?php } ?>

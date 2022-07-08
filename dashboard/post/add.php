@@ -11,6 +11,8 @@ if (isset($_POST['submit'])) {
 	$category = $_POST['category'];
 	$date = new DateTime();
 	$current_date = $date->format('Y-m-d H:i:s');
+	@$setToMain = $_POST['set_to_main'];
+	isset($setToMain) ? $setToMain = 1 : $setToMain = 0;
 
 	// Start image upload
 	$file_name = $_FILES['image']['name'];
@@ -40,7 +42,8 @@ if (isset($_POST['submit'])) {
 	move_uploaded_file($tmp, "../../assets/post_image/" . $file_name);
 	// End image upload
 
-	$sql = "INSERT INTO post VALUES ('', '$title', '$body', '$file_name', '1', '$category', '$current_date')";
+
+	$sql = "INSERT INTO post VALUES ('', '$title', '$body', '$file_name', '1', '$category', '$current_date', '$setToMain', '$current_date')";
 
 	if (mysqli_query($conn, $sql)) {
 		return header("Location: ./");

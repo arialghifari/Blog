@@ -2,7 +2,7 @@
 
 include '../../connection.php';
 
-$sql = "SELECT post.id, post.title, post.created_at, post.category, user.first_name AS 'author'
+$sql = "SELECT post.id, post.title, post.created_at, post.category, post.isMain,user.first_name AS 'author'
 				FROM post
 				LEFT JOIN user ON post.id_user = user.id
 				ORDER BY created_at DESC";
@@ -92,7 +92,9 @@ function getCurrentUrl()
 
 								<tr>
 									<th><?= $no ?></th>
-									<td><?= $row['title'] ?></td>
+									<td><?= $row['isMain'] == 1 ? "🔥" : ""; ?>
+										<?= $row['title'] ?>
+									</td>
 									<td><?= $row['category'] ?></td>
 									<td><?= $row['author'] ?></td>
 									<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>

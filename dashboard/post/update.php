@@ -7,6 +7,9 @@ if (isset($_POST['submit'])) {
 	$title = $_POST['title'];
 	$body = $_POST['body'];
 	$category = $_POST['category'];
+	$date = new DateTime();
+	$current_date = $date->format('Y-m-d H:i:s');
+	@$setToMain = $_POST['set_to_main'];
 
 	if (empty($title) || empty($category) || empty($body)) {
 		$errorMessage = "Please fill out all field";
@@ -50,9 +53,17 @@ if (isset($_POST['submit'])) {
 		move_uploaded_file($tmp, "../../assets/post_image/" . $file_name_format);
 		// End image upload
 
-		$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category' WHERE id='$id'";
+		if (isset($setToMain)) {
+			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='1', createdMainAt='$current_date' WHERE id='$id'";
+		} else {
+			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='0', createdMainAt='NULL' WHERE id='$id'";
+		}
 	} else {
-		$sql = "UPDATE post SET title='$title', body='$body', category='$category' WHERE id='$id'";
+		if (isset($setToMain)) {
+			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='1', createdMainAt='$current_date' WHERE id='$id'";
+		} else {
+			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='0', createdMainAt='NULL' WHERE id='$id'";
+		}
 	}
 
 
