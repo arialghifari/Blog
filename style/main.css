@@ -193,13 +193,22 @@ article {
   height: 280px;
 }
 
-.post__date {
-  font-size: 14px;
-  margin: 4px 0 0 0;
+.post__image-large {
   color: var(--dark);
+  height: 280px;
 }
 
-.post__title {
+.card-post:hover .post__title {
+  text-decoration: underline;
+}
+
+.card-post .post__date {
+  color: var(--dark);
+  font-size: 14px;
+  margin: 4px 0 0 0;
+}
+
+.card-post .post__title {
   font-family: Poppins, sans-serif;
   text-decoration: none;
   font-weight: bold;
@@ -208,13 +217,9 @@ article {
   margin: 4px 0 0 0;
 }
 
-.post__body {
+.card-post .post__body {
   margin: 4px 0 0 0;
   color: var(--dark);
-}
-
-.card-post a:hover > .post__title {
-  text-decoration: underline;
 }
 
 .card-dashboard {
@@ -360,10 +365,8 @@ footer a:hover {
   .read__image {
     max-height: 460px;
   }
-}
 
-@media screen and (min-width: 1200px) {
   .post__image-large {
-    max-height: 400px;
+    height: 400px;
   }
 }
