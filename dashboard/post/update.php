@@ -54,15 +54,15 @@ if (isset($_POST['submit'])) {
 		// End image upload
 
 		if (isset($setToMain)) {
-			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='1', createdMainAt='$current_date' WHERE id='$id'";
+			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='1', created_main_at='$current_date' WHERE id='$id'";
 		} else {
-			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='0', createdMainAt='NULL' WHERE id='$id'";
+			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='0', created_main_at='NULL' WHERE id='$id'";
 		}
 	} else {
 		if (isset($setToMain)) {
-			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='1', createdMainAt='$current_date' WHERE id='$id'";
+			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='1', created_main_at='$current_date' WHERE id='$id'";
 		} else {
-			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='0', createdMainAt='NULL' WHERE id='$id'";
+			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='0', created_main_at='NULL' WHERE id='$id'";
 		}
 	}
 
