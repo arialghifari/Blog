@@ -48,8 +48,7 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 			<a href="#"><img src="./assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<a href="./login/">Start Writing</a>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->
@@ -65,27 +64,31 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 			<!-- Start Top Post -->
 			<article class="row my-5">
 				<div class="col-12 col-md post mb-3">
-					<a href="./read.php?id=<?= @$row_main_post[0]['id'] ?>" class="card-post">
-						<img src="./assets/post_image/<?= @$row_main_post[0]['image'] ?>" alt="" class="post__image-large" />
-						<p class="post__date">by <u><?= @$row_main_post[0]['author'] ?></u> on <?= date("M d Y", strtotime(@$row_main_post[0]['created_at'])) ?></p>
-						<p class="post__title"><?= @$row_main_post[0]['title'] ?></p>
-						<p class="post__body"><?= implode(' ', array_slice(explode(' ', strip_tags(@$row_main_post[0]['body'])), 0, 35)); ?>...</p>
-					</a>
+					<?php if (isset($row_main_post[0]['id'])) { ?>
+						<a href="./read.php?id=<?= @$row_main_post[0]['id'] ?>" class="card-post">
+							<img src="./assets/post_image/<?= @$row_main_post[0]['image'] ?>" alt="" class="post__image-large" />
+							<p class="post__date">by <u><?= @$row_main_post[0]['author'] ?></u> on <?= date("M d Y", strtotime(@$row_main_post[0]['created_at'])) ?></p>
+							<p class="post__title"><?= @$row_main_post[0]['title'] ?></p>
+							<p class="post__body"><?= implode(' ', array_slice(explode(' ', strip_tags(@$row_main_post[0]['body'])), 0, 35)); ?>...</p>
+						</a>
+					<?php } ?>
 				</div>
 
 				<div class="col-12 col-md post">
-					<?php for ($i = 1; $i <= 3; $i++) { ?>
-						<a href="./read.php?id=<?= @$row_main_post[$i]['id'] ?>">
-							<div class="row mb-3 card-post">
-								<div class="col-12 col-xl-6"><img src="./assets/post_image/<?= @$row_main_post[$i]['image'] ?>" alt="" class="post__image" /></div>
-								<div class="col">
-									<p class="post__date">by <u><?= @$row_main_post[$i]['author'] ?></u> on <?= date("M d Y", strtotime(@$row_main_post[$i]['created_at'])) ?></p>
-									<p class="post__title"><?= @$row_main_post[$i]['title'] ?></p>
-									<p class="post__body"><?= implode(' ', array_slice(explode(' ', strip_tags(@$row_main_post[$i]['body'])), 0, 15)); ?>...</p>
+					<?php for ($i = 1; $i <= 3; $i++) {
+						if (isset($row_main_post[$i]['id'])) { ?>
+							<a href="./read.php?id=<?= @$row_main_post[$i]['id'] ?>">
+								<div class="row mb-3 card-post">
+									<div class="col-12 col-xl-6"><img src="./assets/post_image/<?= @$row_main_post[$i]['image'] ?>" alt="" class="post__image" /></div>
+									<div class="col">
+										<p class="post__date">by <u><?= @$row_main_post[$i]['author'] ?></u> on <?= date("M d Y", strtotime(@$row_main_post[$i]['created_at'])) ?></p>
+										<p class="post__title"><?= @$row_main_post[$i]['title'] ?></p>
+										<p class="post__body"><?= implode(' ', array_slice(explode(' ', strip_tags(@$row_main_post[$i]['body'])), 0, 15)); ?>...</p>
+									</div>
 								</div>
-							</div>
-						</a>
-					<?php } ?>
+							</a>
+					<?php }
+					} ?>
 				</div>
 			</article>
 			<!-- End Top Post -->
@@ -122,6 +125,7 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 				<article class="col-12 col-md-9 post">
 					<p class="title-post">Recent Post</p>
 					<div class="row mb-3">
+						<?php if (mysqli_num_rows($query_post) <= 0) { ?> <p>No post found</p> <?php } ?>
 						<?php while ($row_post = mysqli_fetch_array($query_post)) { ?>
 							<div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
 								<a href="read.php?id=<?= $row_post['id'] ?>">

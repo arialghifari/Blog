@@ -61,12 +61,14 @@ body {
 .nav-main > div a {
   text-decoration: none;
   color: var(--dark);
-  border-bottom: 1px solid var(--background);
+  border: 1px solid var(--dark);
+  padding: 4px 8px;
   transition: 0.2s;
 }
 
 .nav-main > div a:hover {
-  border-bottom: 1px solid var(--dark);
+  background-color: var(--dark);
+  color: var(--soft);
 }
 
 aside * {
@@ -125,6 +127,18 @@ aside * {
 
 .search .input {
   padding-left: 40px;
+}
+
+.register > *,
+.login > *,
+.register > p a,
+.login > p a {
+  color: var(--dark);
+}
+
+.register > p a:hover,
+.login > p a:hover {
+  color: var(--darker);
 }
 
 form.search {
@@ -334,6 +348,10 @@ table a:hover > img {
 table img {
   color: red;
   width: 100%;
+}
+
+input {
+  border: 1px solid;
 }
 
 footer {

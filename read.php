@@ -60,7 +60,7 @@ $row_post = mysqli_fetch_array(mysqli_query($conn, $sql_post));
 					</div>
 					<div class="row mt-3">
 						<div class="col d-block d-md-flex justify-content-between align-items-center">
-							<p class="m-0 mb-2 mb-md-0">Author <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
+							<p class="m-0 mb-2 mb-md-0">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
 							<a href="./category.php?name=<?= $row_post['category'] ?>" class="read__category"><?= $row_post['category'] ?></a>
 						</div>
 					</div>
