@@ -181,6 +181,16 @@ form.search img {
   margin: 0;
 }
 
+.login, .register{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input{
+  border: 1px solid;
+}
+
 article {
   margin: 36px 0;
 }
@@ -207,22 +217,13 @@ article {
   height: 280px;
 }
 
-.post__image-large {
-  color: var(--dark);
-  height: 280px;
-}
-
-.card-post:hover .post__title {
-  text-decoration: underline;
-}
-
-.card-post .post__date {
-  color: var(--dark);
+.post__date {
   font-size: 14px;
   margin: 4px 0 0 0;
+  color: var(--dark);
 }
 
-.card-post .post__title {
+.post__title {
   font-family: Poppins, sans-serif;
   text-decoration: none;
   font-weight: bold;
@@ -231,9 +232,13 @@ article {
   margin: 4px 0 0 0;
 }
 
-.card-post .post__body {
+.post__body {
   margin: 4px 0 0 0;
   color: var(--dark);
+}
+
+.card-post a:hover > .post__title {
+  text-decoration: underline;
 }
 
 .card-dashboard {
@@ -383,8 +388,10 @@ footer a:hover {
   .read__image {
     max-height: 460px;
   }
+}
 
+@media screen and (min-width: 1200px) {
   .post__image-large {
-    height: 400px;
+    max-height: 400px;
   }
 }
