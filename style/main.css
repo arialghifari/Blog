@@ -1,5 +1,6 @@
 /* @import url("https://fonts.googleapis.com/css2?family=PT+Serif&family=Playfair+Display:wght@900&family=Poppins&display=swap"); */
 
+/* import font manually */
 @font-face {
   font-family: "Playfair Display";
   src: url("./font/PlayfairDisplay-Black.ttf");
