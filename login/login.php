@@ -1,6 +1,11 @@
 <?php
 
 include '../connection.php';
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+	return header('Location: ../dashboard/');
+}
 
 if (isset($_POST['submit'])) {
 	$email = $_POST['email'];
@@ -31,7 +36,6 @@ if (isset($_POST['submit'])) {
 	};
 
 	// Set session
-	session_start();
 	$_SESSION['user_id'] = $fetch_user['id'];
 	$_SESSION['user_email'] = $fetch_user['email'];
 	$_SESSION['user_first_name'] = $fetch_user['first_name'];

@@ -1,6 +1,11 @@
 <?php
 
 include '../connection.php';
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+	return header('Location: ../dashboard/');
+}
 
 if (isset($_POST['submit'])) {
 	$errorMessage = null;
@@ -30,7 +35,18 @@ if (isset($_POST['submit'])) {
 	$sql = "INSERT INTO user VALUES ('', '$email', '$password_hash', '$first_name', '$last_name', '0', '$current_date')";
 
 	if (mysqli_query($conn, $sql)) {
-		return header("Location: ./");
+		$sql_user = "SELECT * FROM user WHERE email='$email'";
+		$query_user = mysqli_query($conn, $sql_user);
+		$fetch_user = mysqli_fetch_array($query_user);
+
+		// Set session
+		$_SESSION['user_id'] = $fetch_user['id'];
+		$_SESSION['user_email'] = $fetch_user['email'];
+		$_SESSION['user_first_name'] = $fetch_user['first_name'];
+		$_SESSION['user_last_name'] = $fetch_user['last_name'];
+		$_SESSION['user_isAdmin'] = $fetch_user['isAdmin'];
+
+		return header("Location: ../dashboard/");
 	} else {
 		echo "Error: " . $sql . "<br/>" . mysqli_error($conn);
 	}

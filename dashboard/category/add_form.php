@@ -1,6 +1,11 @@
 <?php
 
 @$errorMessage = $_GET['err'];
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	return Header('Location: ../../');
+}
 
 ?>
 
@@ -21,11 +26,16 @@
 	<div class="container">
 		<!-- Start Top Navigation -->
 		<nav class="nav-main" aria-label="main navigation">
-			<a href="../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
+			<a href="../../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<?php if ($_SESSION['user_id']) { ?>
+					<p class="m-0 rounded-0 dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_first_name']; ?></p>
+					<ul class="dropdown-menu dropdown-menu-end rounded-0">
+						<li><a href="../"><button class="dropdown-item" type="button">Dashboard</button></a></li>
+						<li><a href="../../logout/"><button class="dropdown-item" type="button">Logout</button></a></li>
+					</ul>
+				<?php } ?>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->
@@ -38,12 +48,17 @@
 		</header>
 
 		<main>
-			<div class="row my-4">
+			<div class="row my-5">
 				<!-- Start Aside -->
 				<aside class="col-12 col-md-3 mb-4">
 					<div class="manage">
-						<p class="manage__title">Manage</p>
+						<nav class="nav-side mb-4 p-0" aria-label="Manage Navigation">
+							<a href="../">
+								<p>Dashboard</p>
+							</a>
+						</nav>
 
+						<p class="manage__title">Manage</p>
 						<nav class="nav-side" aria-label="Manage Navigation">
 							<a href="../post/">
 								<p>Post</p>

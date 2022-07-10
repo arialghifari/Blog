@@ -39,7 +39,7 @@ function getRecordCount($table)
 	<div class="container">
 		<!-- Start Top Navigation -->
 		<nav class="nav-main" aria-label="main navigation">
-			<a href="#"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
+			<a href="../"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
 				<?php if ($_SESSION['user_id']) { ?>
@@ -65,8 +65,13 @@ function getRecordCount($table)
 				<!-- Start Aside -->
 				<aside class="col-12 col-md-3 mb-4">
 					<div class="manage">
-						<p class="manage__title">Manage</p>
+						<nav class="nav-side mb-4 p-0" aria-label="Manage Navigation">
+							<a href="./">
+								<p class="active">Dashboard</p>
+							</a>
+						</nav>
 
+						<p class="manage__title">Manage</p>
 						<nav class="nav-side" aria-label="Manage Navigation">
 							<?php if ($_SESSION['user_isAdmin']) { ?>
 								<a href="./post/">
