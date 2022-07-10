@@ -1,7 +1,7 @@
 <?php
 
 include "../../connection.php";
-
+session_start();
 
 if (isset($_POST['submit'])) {
 	$errorMessage = null;
@@ -11,8 +11,13 @@ if (isset($_POST['submit'])) {
 	$category = $_POST['category'];
 	$date = new DateTime();
 	$current_date = $date->format('Y-m-d H:i:s');
-	@$setToMain = $_POST['set_to_main'];
-	isset($setToMain) ? $setToMain = 1 : $setToMain = 0;
+	$user_id = $_SESSION['user_id'];
+	if ($_SESSION['user_isAdmin']) {
+		@$setToMain = $_POST['set_to_main'];
+		isset($setToMain) ? $setToMain = 1 : $setToMain = 0;
+	} else {
+		$setToMain = 0;
+	}
 
 	// Start image upload
 	$file_name = $_FILES['image']['name'];
@@ -43,7 +48,7 @@ if (isset($_POST['submit'])) {
 	// End image upload
 
 
-	$sql = "INSERT INTO post VALUES ('', '$title', '$body', '$file_name', '1', '$category', '$current_date', '$setToMain', '$current_date')";
+	$sql = "INSERT INTO post VALUES ('', '$title', '$body', '$file_name', '$user_id', '$category', '$current_date', '$setToMain', '$current_date')";
 
 	if (mysqli_query($conn, $sql)) {
 		return header("Location: ./");

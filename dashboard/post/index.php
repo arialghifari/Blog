@@ -1,18 +1,27 @@
 <?php
 
 include '../../connection.php';
+session_start();
 
-$sql = "SELECT post.id, post.title, post.created_at, post.category, post.isMain,user.first_name AS 'author'
-				FROM post
-				LEFT JOIN user ON post.id_user = user.id
-				ORDER BY created_at DESC";
-$query = mysqli_query($conn, $sql);
-
-function getCurrentUrl()
-{
-	$fullUrl = $_SERVER['REQUEST_URI'];
-	return explode("/", $fullUrl)[4];
+if (!isset($_SESSION['user_id'])) {
+	return Header('Location: ../../');
 }
+
+if ($_SESSION['user_isAdmin']) {
+	$sql = "SELECT post.id, post.title, post.created_at, post.category, post.isMain,user.first_name AS 'author'
+			FROM post
+			LEFT JOIN user ON post.id_user = user.id
+			ORDER BY created_at DESC";
+} else {
+	$user_id = $_SESSION['user_id'];
+
+	$sql = "SELECT post.id, post.title, post.created_at, post.category, post.isMain,user.first_name AS 'author'
+			FROM post
+			LEFT JOIN user ON post.id_user = user.id
+			WHERE id_user='$user_id'
+			ORDER BY created_at DESC";
+}
+$query = mysqli_query($conn, $sql);
 
 ?>
 
@@ -36,8 +45,13 @@ function getCurrentUrl()
 			<a href="../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<?php if ($_SESSION['user_id']) { ?>
+					<p class="m-0 rounded-0 dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_first_name']; ?></p>
+					<ul class="dropdown-menu dropdown-menu-end rounded-0">
+						<li><a href="../"><button class="dropdown-item" type="button">Dashboard</button></a></li>
+						<li><a href="../../logout/"><button class="dropdown-item" type="button">Logout</button></a></li>
+					</ul>
+				<?php } ?>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->
@@ -57,15 +71,21 @@ function getCurrentUrl()
 						<p class="manage__title">Manage</p>
 
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<a href="./">
-								<p class="active">Post</p>
-							</a>
-							<a href="../category/">
-								<p>Category</p>
-							</a>
-							<a href="../user/">
-								<p>User</p>
-							</a>
+							<?php if ($_SESSION['user_isAdmin']) { ?>
+								<a href="./">
+									<p class="active">Post</p>
+								</a>
+								<a href="../category/">
+									<p>Category</p>
+								</a>
+								<a href="#">
+									<p>User</p>
+								</a>
+							<?php } else { ?>
+								<a href="./">
+									<p class="active">Post</p>
+								</a>
+							<?php } ?>
 						</nav>
 					</div>
 				</aside>
@@ -79,7 +99,9 @@ function getCurrentUrl()
 								<th>No</th>
 								<th>Title</th>
 								<th>Category</th>
-								<th>Author</th>
+								<?php if ($_SESSION['user_isAdmin']) { ?>
+									<th>Author</th>
+								<?php } ?>
 								<th>Publised At</th>
 								<th class="text-center">Action</th>
 							</tr>
@@ -96,7 +118,9 @@ function getCurrentUrl()
 										<?= $row['title'] ?>
 									</td>
 									<td><?= $row['category'] ?></td>
-									<td><?= $row['author'] ?></td>
+									<?php if ($_SESSION['user_isAdmin']) { ?>
+										<td><?= $row['author'] ?></td>
+									<?php } ?>
 									<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
 									<td>
 										<div class="d-flex justify-content-center align-items-center gap-2">

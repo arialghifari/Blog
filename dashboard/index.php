@@ -1,12 +1,22 @@
 <?php
 
 include '../connection.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	return Header('Location: ../');
+}
 
 function getRecordCount($table)
 {
 	global $conn;
-	
-	$sql = "SELECT COUNT(*) FROM $table";
+	$user_id = $_SESSION['user_id'];
+
+	if ($_SESSION['user_isAdmin']) {
+		$sql = "SELECT COUNT(*) FROM $table";
+	} else {
+		$sql = "SELECT COUNT(*) FROM $table WHERE id_user='$user_id'";
+	}
 	return mysqli_fetch_array(mysqli_query($conn, $sql))[0];
 }
 
@@ -20,7 +30,7 @@ function getRecordCount($table)
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../style/bootstrap.min.css" />
-  <script src="../style/bootstrap.bundle.min.js"></script>
+	<script src="../style/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" href="../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -32,8 +42,13 @@ function getRecordCount($table)
 			<a href="#"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<?php if ($_SESSION['user_id']) { ?>
+					<p class="m-0 rounded-0 dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_first_name']; ?></p>
+					<ul class="dropdown-menu dropdown-menu-end rounded-0">
+						<li><a href="./"><button class="dropdown-item" type="button">Dashboard</button></a></li>
+						<li><a href="../logout/"><button class="dropdown-item" type="button">Logout</button></a></li>
+					</ul>
+				<?php } ?>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->
@@ -53,39 +68,54 @@ function getRecordCount($table)
 						<p class="manage__title">Manage</p>
 
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<a href="./post/">
-								<p>Post</p>
-							</a>
-							<a href="./category/">
-								<p>Category</p>
-							</a>
-							<a href="#">
-								<p>User</p>
-							</a>
+							<?php if ($_SESSION['user_isAdmin']) { ?>
+								<a href="./post/">
+									<p>Post</p>
+								</a>
+								<a href="./category/">
+									<p>Category</p>
+								</a>
+								<a href="#">
+									<p>User</p>
+								</a>
+							<?php } else { ?>
+								<a href="./post/">
+									<p>Post</p>
+								</a>
+							<?php } ?>
 						</nav>
 					</div>
 				</aside>
 
 				<section class="col-12 col-md-9">
 					<div class="row text-center">
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>Post</p>
-								<h2><?= getRecordCount('post') ?></h2>
+						<?php if ($_SESSION['user_isAdmin']) { ?>
+							<div class="col-12 col-sm-4 mb-3">
+								<div class="card-dashboard">
+									<p>Post</p>
+									<h2><?= getRecordCount('post') ?></h2>
+								</div>
 							</div>
-						</div>
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>Category</p>
-								<h2><?= getRecordCount('category') ?></h2>
+							<div class="col-12 col-sm-4 mb-3">
+								<div class="card-dashboard">
+									<p>Category</p>
+									<h2><?= getRecordCount('category') ?></h2>
+								</div>
 							</div>
-						</div>
-						<div class="col-12 col-sm-4 mb-3">
-							<div class="card-dashboard">
-								<p>User</p>
-								<h2><?= getRecordCount('user') ?></h2>
+							<div class="col-12 col-sm-4 mb-3">
+								<div class="card-dashboard">
+									<p>User</p>
+									<h2><?= getRecordCount('user') ?></h2>
+								</div>
 							</div>
-						</div>
+						<?php } else { ?>
+							<div class="col-12 col-sm-4 mb-3">
+								<div class="card-dashboard">
+									<p>Post</p>
+									<h2><?= getRecordCount('post') ?></h2>
+								</div>
+							</div>
+						<?php } ?>
 					</div>
 				</section>
 		</main>

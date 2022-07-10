@@ -1,6 +1,11 @@
 <?php
 
 include "../../connection.php";
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	return Header('Location: ../../');
+}
 
 $sql = "SELECT * FROM category ORDER BY name";
 $query = mysqli_query($conn, $sql);
@@ -30,8 +35,13 @@ $query = mysqli_query($conn, $sql);
 			<a href="../"><img src="../../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<?php if ($_SESSION['user_id']) { ?>
+					<p class="m-0 rounded-0 dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_first_name']; ?></p>
+					<ul class="dropdown-menu dropdown-menu-end rounded-0">
+						<li><a href="../"><button class="dropdown-item" type="button">Dashboard</button></a></li>
+						<li><a href="../../logout/"><button class="dropdown-item" type="button">Logout</button></a></li>
+					</ul>
+				<?php } ?>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->
@@ -44,22 +54,28 @@ $query = mysqli_query($conn, $sql);
 		</header>
 
 		<main>
-			<div class="row my-4">
+			<div class="row my-5">
 				<!-- Start Aside -->
 				<aside class="col-12 col-md-3 mb-4">
 					<div class="manage">
 						<p class="manage__title">Manage</p>
 
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<a href="./">
-								<p>Post</p>
-							</a>
-							<a href="../category/">
-								<p>Category</p>
-							</a>
-							<a href="../user/">
-								<p>User</p>
-							</a>
+							<?php if ($_SESSION['user_isAdmin']) { ?>
+								<a href="./">
+									<p>Post</p>
+								</a>
+								<a href="../category/">
+									<p>Category</p>
+								</a>
+								<a href="#">
+									<p>User</p>
+								</a>
+							<?php } else { ?>
+								<a href="./">
+									<p>Post</p>
+								</a>
+							<?php } ?>
 						</nav>
 					</div>
 				</aside>
@@ -86,8 +102,10 @@ $query = mysqli_query($conn, $sql);
 							<?php } ?>
 						</select>
 
-						<input type="checkbox" name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
-						<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
+						<?php if ($_SESSION['user_isAdmin']) { ?>
+							<input type="checkbox" name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
+							<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
+						<?php } ?>
 
 						<?php if ($errorMessage) { ?>
 							<p class="error">* <?= $errorMessage ?></p>
