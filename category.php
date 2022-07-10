@@ -1,6 +1,7 @@
 <?php
 
 include './connection.php';
+session_start();
 
 $category_name = $_GET['name'];
 
@@ -9,15 +10,15 @@ $query_category = mysqli_query($conn, $sql_category);
 
 if ($category_name == 'All') {
 	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
-							FROM post
-							LEFT JOIN user ON post.id_user = user.id
-							ORDER BY created_at DESC";
+				FROM post
+				LEFT JOIN user ON post.id_user = user.id
+				ORDER BY created_at DESC";
 } else {
 	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
-								FROM post
-								LEFT JOIN user ON post.id_user = user.id
-								WHERE category = '$category_name'
-								ORDER BY created_at DESC";
+				FROM post
+				LEFT JOIN user ON post.id_user = user.id
+				WHERE category = '$category_name'
+				ORDER BY created_at DESC";
 }
 $query_post = mysqli_query($conn, $sql_post);
 
@@ -43,8 +44,15 @@ $query_post = mysqli_query($conn, $sql_post);
 			<a href="./"><img src="./assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<?php if (isset($_SESSION['user_id'])) { ?>
+					<p class="m-0 rounded-0 dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_first_name']; ?></p>
+					<ul class="dropdown-menu dropdown-menu-end rounded-0">
+						<li><a href="./dashboard/"><button class="dropdown-item" type="button">Dashboard</button></a></li>
+						<li><a href="./logout/"><button class="dropdown-item" type="button">Logout</button></a></li>
+					</ul>
+				<?php } else { ?>
+					<a href="./login/" class="start-writing">Start Writing</a>
+				<?php }  ?>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->

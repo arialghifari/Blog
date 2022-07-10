@@ -59,7 +59,7 @@ body {
   gap: 24px;
 }
 
-.nav-main > div a {
+.nav-main > div > a {
   text-decoration: none;
   color: var(--dark);
   border: 1px solid var(--dark);
@@ -67,9 +67,23 @@ body {
   transition: 0.2s;
 }
 
-.nav-main > div a:hover {
+.nav-main p {
+  color: var(--dark);
+  cursor: pointer;
+}
+
+.nav-main p:hover {
+  color: var(--darker);
+}
+
+.nav-main > div > a:hover {
   background-color: var(--dark);
   color: var(--soft);
+}
+
+.nav-main .dropdown-menu a {
+  color: var(--dark);
+  text-decoration: none;
 }
 
 aside * {
@@ -132,7 +146,7 @@ aside * {
 
 .login,
 .signup {
-	max-width: 400px;
+  max-width: 400px;
 }
 
 .signup > *,
@@ -354,10 +368,6 @@ table a:hover > img {
 table img {
   color: red;
   width: 100%;
-}
-
-input {
-  border: 1px solid;
 }
 
 footer {

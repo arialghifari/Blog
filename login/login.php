@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 	};
 
 	if (mysqli_num_rows($query_user) <= 0) {
-		$errorMessage = "Email has not been registered";
+		$errorMessage = "Email is not registered";
 
 		return header("Location: ./index.php?err=$errorMessage");
 	};
@@ -30,9 +30,13 @@ if (isset($_POST['submit'])) {
 		return header("Location: ./index.php?err=$errorMessage");
 	};
 
-
-	// set session
-	// ...
+	// Set session
+	session_start();
+	$_SESSION['user_id'] = $fetch_user['id'];
+	$_SESSION['user_email'] = $fetch_user['email'];
+	$_SESSION['user_first_name'] = $fetch_user['first_name'];
+	$_SESSION['user_last_name'] = $fetch_user['last_name'];
+	$_SESSION['user_isAdmin'] = $fetch_user['isAdmin'];
 
 	if ($query_user) {
 		return header("Location: ../dashboard/");

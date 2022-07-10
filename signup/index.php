@@ -1,5 +1,10 @@
 <?php
 
+session_start();
+if (isset($_SESSION['user_id'])) {
+	return header('Location: ../dashboard/');
+}
+
 @$errorMessage = $_GET['err'];
 
 ?>
@@ -24,8 +29,7 @@
 			<a href="../"><img src="../assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="#">About Us</a>
-				<a href="#">Contact Us</a>
+				<a href="../login/" class="start-writing">Start Writing</a>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->

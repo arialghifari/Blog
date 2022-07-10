@@ -1,6 +1,7 @@
 <?php
 
 include './connection.php';
+session_start();
 
 $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
@@ -48,7 +49,15 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 			<a href="#"><img src="./assets/logo.svg" alt="The Blog Logo" /></a>
 
 			<div>
-				<a href="./login/">Start Writing</a>
+				<?php if (isset($_SESSION['user_id'])) { ?>
+					<p class="m-0 rounded-0 dropdown-toggle cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_first_name']; ?></p>
+					<ul class="dropdown-menu dropdown-menu-end rounded-0">
+						<li><a href="./dashboard/"><button class="dropdown-item" type="button">Dashboard</button></a></li>
+						<li><a href="./logout/"><button class="dropdown-item" type="button">Logout</button></a></li>
+					</ul>
+				<?php } else { ?>
+					<a href="./login/" class="start-writing">Start Writing</a>
+				<?php }  ?>
 			</div>
 		</nav>
 		<!-- End Top Navigation -->
