@@ -130,14 +130,19 @@ aside * {
   padding-left: 40px;
 }
 
-.register > *,
+.login,
+.signup {
+	max-width: 400px;
+}
+
+.signup > *,
 .login > *,
-.register > p a,
+.signup > p a,
 .login > p a {
   color: var(--dark);
 }
 
-.register > p a:hover,
+.signup > p a:hover,
 .login > p a:hover {
   color: var(--darker);
 }

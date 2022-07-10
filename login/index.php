@@ -31,7 +31,7 @@
 			</section>
 		</header>
 
-		<main>
+		<main class="d-flex justify-content-center">
 			<section class="login my-5">
 				<h2 class="text-center fs-3 fw-semibold">Login</h2>
 				<form action="./login.php" method="post">
@@ -43,7 +43,7 @@
 
 					<input type="submit" name="submit" id="submit" value="Login" class="btn-primary my-2">
 				</form>
-				<p>Don't have account? <a href="../signup/index.php">Sign Up</a></p>
+				<p>Don't have account? <a href="../signup/">Sign Up</a></p>
 			</section>
 		</main>
 	</div>

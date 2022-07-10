@@ -1,3 +1,9 @@
+<?php
+
+@$errorMessage = $_GET['err'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,8 +37,8 @@
 			</section>
 		</header>
 
-		<main>
-			<section class="login my-5">
+		<main class="d-flex justify-content-center">
+			<section class="signup my-5">
 				<h2 class="text-center fs-3 fw-semibold">Sign Up</h2>
 				<form action="./signup.php" method="post">
 					<label for="email">Email</label>
@@ -47,9 +53,12 @@
 					<label for="last-name">Last Name</label>
 					<input type="last-name" name="last_name" id="last-name" class="input mt-1 mb-2" required>
 
+					<?php if ($errorMessage) { ?>
+						<p class="error">* <?= $errorMessage ?></p>
+					<?php } ?>
 					<input type="submit" name="submit" id="submit" value="Sign Up" class="btn-primary my-2">
 				</form>
-				<p>Already have account? <a href="../login/index.php">Login</a></p>
+				<p>Already have account? <a href="../login/">Login</a></p>
 			</section>
 		</main>
 	</div>
