@@ -1,3 +1,9 @@
+<?php
+
+@$errorMessage = $_GET['err'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +47,9 @@
 					<label for="password">Password</label>
 					<input type="password" name="password" id="password" class="input mt-1 mb-2" required>
 
+					<?php if ($errorMessage) { ?>
+						<p class="error">* <?= $errorMessage ?></p>
+					<?php } ?>
 					<input type="submit" name="submit" id="submit" value="Login" class="btn-primary my-2">
 				</form>
 				<p>Don't have account? <a href="../signup/">Sign Up</a></p>

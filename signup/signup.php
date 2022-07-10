@@ -20,8 +20,8 @@ if (isset($_POST['submit'])) {
 	};
 
 	$sql_email = "SELECT email from user WHERE email='$email'";
-	$query_email = mysqli_num_rows(mysqli_query($conn, $sql_email));
-	if ($query_email > 0) {
+	$query_email = mysqli_query($conn, $sql_email);
+	if (mysqli_num_rows($query_email) > 0) {
 		$errorMessage = "Email has been registered";
 
 		return header("Location: ./index.php?err=$errorMessage");
