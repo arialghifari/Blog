@@ -8,13 +8,11 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $id = $_GET['id'];
-$sql = "SELECT * FROM post WHERE id='$id'";
-$row = mysqli_fetch_array(mysqli_query($conn, $sql));
-
-$sql_category = "SELECT * FROM category ORDER BY name";
-$query_category = mysqli_query($conn, $sql_category);
-
 @$errorMessage = $_GET['err'];
+
+$sql = "SELECT * FROM user WHERE id='$id'";
+
+$row = mysqli_fetch_array(mysqli_query($conn, $sql));
 
 ?>
 
@@ -27,7 +25,6 @@ $query_category = mysqli_query($conn, $sql_category);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
 	<script src="../../style/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.tiny.cloud/1/9u2jycvj0mas1t05212h7sepjnmtmcm9md5teyhi7rnnlcpf/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -70,57 +67,42 @@ $query_category = mysqli_query($conn, $sql_category);
 
 						<p class="manage__title">Manage</p>
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<?php if ($_SESSION['user_isAdmin']) { ?>
-								<a href="./">
-									<p>Post</p>
-								</a>
-								<a href="../category/">
-									<p>Category</p>
-								</a>
-								<a href="../user/">
-									<p>User</p>
-								</a>
-							<?php } else { ?>
-								<a href="./">
-									<p>Post</p>
-								</a>
-							<?php } ?>
+							<a href="../post/">
+								<p>Post</p>
+							</a>
+							<a href="../category/">
+								<p>Category</p>
+							</a>
+							<a href="./">
+								<p>User</p>
+							</a>
 						</nav>
 					</div>
 				</aside>
 
 				<section class="col-12 col-md-9">
-					<h3>Edit Post</h3>
+					<h3>Edit User</h3>
 					<hr>
 
-					<form action="./update.php" method="post" enctype="multipart/form-data">
+					<form action="./update.php" method="post">
 						<input type="hidden" name="id" value="<?= $row['id'] ?>" class="input mt-1 mb-2">
+						<input type="hidden" name="default_email" id="default-email" value="<?= $row['email'] ?>" class="input mt-1 mb-2">
 
-						<label for="title">Title</label>
-						<input type="text" name="title" id="title" value="<?= $row['title'] ?>" class="input mt-1 mb-2" required>
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" value="<?= $row['email'] ?>" class="input mt-1 mb-2" required>
 
-						<label for="image">Image</label>
-						<img src="../../assets/post_image/<?= $row['image'] ?>" class="preview__image" alt="" />
-						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/webp, image/png, image/jpg, image/jpeg">
-						<p><small>* Leave this blank if you don't want to change the image</small></p>
+						<label for="password">Password</label>
+						<input type="password" name="password" id="password" class="input mt-1 mb-2">
+						<p><small>* Leave this blank if you don't want to change the password</small></p>
 
-						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="30" rows="10" required><?= $row['body'] ?></textarea>
+						<label for="first-name">First Name</label>
+						<input type="first-name" name="first_name" id="first-name" value="<?= $row['first_name'] ?>" class="input mt-1 mb-2" required>
 
-						<label for="category">Category</label>
-						<select name="category" id="category" class="input mt-1 mb-2" required>
-							<option disabled>Choose</option>
-							<?php while ($row_category = mysqli_fetch_array($query_category)) { ?>
-								<option value="<?= $row_category['name'] ?>" <?php if ($row_category['name'] == $row['category']) echo 'selected' ?>>
-									<?= $row_category['name'] ?>
-								</option>
-							<?php } ?>
-						</select>
+						<label for="last-name">Last Name</label>
+						<input type="last-name" name="last_name" id="last-name" value="<?= $row['last_name'] ?>" class="input mt-1 mb-2" required>
 
-						<?php if ($_SESSION['user_isAdmin']) { ?>
-							<input type="checkbox" <?= $row['isMain'] == 1 ? "checked" : "" ?> name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
-							<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
-						<?php } ?>
+						<input type="checkbox" name="set_as_admin" id="set-as-admin" <?php if ($row['isAdmin'] == '1') echo "checked" ?> class="form-check-input mt-2 me-1 text-start">
+						<label for="set-as-admin" class="mt-1 mb-2">Set as admin🔑</label>
 
 						<?php if ($errorMessage) { ?>
 							<p class="error">* <?= $errorMessage ?></p>
@@ -134,13 +116,6 @@ $query_category = mysqli_query($conn, $sql_category);
 			<p>Copyright © <?= date('Y') ?> <a href="#">The Blog</a></p>
 		</footer>
 	</div>
-
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			height: 600,
-		});
-	</script>
 </body>
 
 </html>

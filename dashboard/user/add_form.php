@@ -1,16 +1,11 @@
 <?php
 
-include "../../connection.php";
+@$errorMessage = $_GET['err'];
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
 	return Header('Location: ../../');
 }
-
-$sql = "SELECT * FROM category ORDER BY name";
-$query = mysqli_query($conn, $sql);
-
-@$errorMessage = $_GET['err'];
 
 ?>
 
@@ -23,7 +18,6 @@ $query = mysqli_query($conn, $sql);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
 	<script src="../../style/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.tiny.cloud/1/9u2jycvj0mas1t05212h7sepjnmtmcm9md5teyhi7rnnlcpf/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -66,56 +60,43 @@ $query = mysqli_query($conn, $sql);
 
 						<p class="manage__title">Manage</p>
 						<nav class="nav-side" aria-label="Manage Navigation">
-							<?php if ($_SESSION['user_isAdmin']) { ?>
-								<a href="./">
-									<p>Post</p>
-								</a>
-								<a href="../category/">
-									<p>Category</p>
-								</a>
-								<a href="../user/">
-									<p>User</p>
-								</a>
-							<?php } else { ?>
-								<a href="./">
-									<p>Post</p>
-								</a>
-							<?php } ?>
+							<a href="../post/">
+								<p>Post</p>
+							</a>
+							<a href="../category/">
+								<p>Category</p>
+							</a>
+							<a href="./">
+								<p>User</p>
+							</a>
 						</nav>
 					</div>
 				</aside>
 
 				<section class="col-12 col-md-9">
-					<h3>Add Post</h3>
+					<h3>Add User</h3>
 					<hr>
 
-					<form action="./add.php" method="post" enctype="multipart/form-data">
-						<label for="title">Title</label>
-						<input type="text" name="title" id="title" class="input mt-1 mb-2" required>
+					<form action="./add.php" method="post">
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" class="input mt-1 mb-2" required>
 
-						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg, image/webp" required>
+						<label for="password">Password</label>
+						<input type="password" name="password" id="password" class="input mt-1 mb-2" required>
 
-						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="60" rows="10" required> </textarea>
+						<label for="first-name">First Name</label>
+						<input type="first-name" name="first_name" id="first-name" class="input mt-1 mb-2" required>
 
-						<label for="category" class="mt-2">Category</label>
-						<select name="category" id="category" class="input mt-1 mb-2" required>
-							<option disabled selected>Choose</option>
-							<?php while ($row = mysqli_fetch_array($query)) { ?>
-								<option value="<?= $row['name'] ?>"><?= $row['name'] ?></option>
-							<?php } ?>
-						</select>
+						<label for="last-name">Last Name</label>
+						<input type="last-name" name="last_name" id="last-name" class="input mt-1 mb-2" required>
 
-						<?php if ($_SESSION['user_isAdmin']) { ?>
-							<input type="checkbox" name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
-							<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
-						<?php } ?>
+						<input type="checkbox" name="set_as_admin" id="set-as-admin" class="form-check-input mt-2 me-1 text-start">
+						<label for="set-as-admin" class="mt-1 mb-2">Set as admin🔑</label>
 
 						<?php if ($errorMessage) { ?>
 							<p class="error">* <?= $errorMessage ?></p>
 						<?php } ?>
-						<input type="submit" name="submit" id="submit" value="Publish" class="btn-primary">
+						<input type="submit" name="submit" value="Submit" class="btn-primary">
 					</form>
 				</section>
 		</main>
@@ -124,13 +105,6 @@ $query = mysqli_query($conn, $sql);
 			<p>Copyright © <?= date('Y') ?> <a href="#">The Blog</a></p>
 		</footer>
 	</div>
-
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			height: 600,
-		});
-	</script>
 </body>
 
 </html>

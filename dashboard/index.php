@@ -80,7 +80,7 @@ function getRecordCount($table)
 								<a href="./category/">
 									<p>Category</p>
 								</a>
-								<a href="#">
+								<a href="./user/">
 									<p>User</p>
 								</a>
 							<?php } else { ?>

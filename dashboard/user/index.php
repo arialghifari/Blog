@@ -1,16 +1,20 @@
 <?php
 
-include "../../connection.php";
+include '../../connection.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
 	return Header('Location: ../../');
 }
 
-$sql = "SELECT * FROM category ORDER BY name";
+$sql = "SELECT * FROM user";
 $query = mysqli_query($conn, $sql);
 
-@$errorMessage = $_GET['err'];
+function getCurrentUrl()
+{
+	$fullUrl = $_SERVER['REQUEST_URI'];
+	return explode("/", $fullUrl)[4];
+}
 
 ?>
 
@@ -23,7 +27,6 @@ $query = mysqli_query($conn, $sql);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../style/bootstrap.min.css" />
 	<script src="../../style/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.tiny.cloud/1/9u2jycvj0mas1t05212h7sepjnmtmcm9md5teyhi7rnnlcpf/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	<link rel="stylesheet" href="../../style/main.css" />
 	<title>The Blog</title>
 </head>
@@ -67,18 +70,14 @@ $query = mysqli_query($conn, $sql);
 						<p class="manage__title">Manage</p>
 						<nav class="nav-side" aria-label="Manage Navigation">
 							<?php if ($_SESSION['user_isAdmin']) { ?>
-								<a href="./">
+								<a href="../post/">
 									<p>Post</p>
 								</a>
 								<a href="../category/">
 									<p>Category</p>
 								</a>
-								<a href="../user/">
-									<p>User</p>
-								</a>
-							<?php } else { ?>
 								<a href="./">
-									<p>Post</p>
+									<p class="active">User</p>
 								</a>
 							<?php } ?>
 						</nav>
@@ -86,37 +85,46 @@ $query = mysqli_query($conn, $sql);
 				</aside>
 
 				<section class="col-12 col-md-9">
-					<h3>Add Post</h3>
-					<hr>
+					<a href="./add_form.php" class="btn-primary mb-3">Add User</a>
 
-					<form action="./add.php" method="post" enctype="multipart/form-data">
-						<label for="title">Title</label>
-						<input type="text" name="title" id="title" class="input mt-1 mb-2" required>
+					<div class="overflow-auto">
+						<table class="table">
+							<tr>
+								<th>No</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Joined At</th>
+								<th class="text-center">Action</th>
+							</tr>
+							<?php
+							$no = 1;
 
-						<label for="image">Image</label>
-						<input type="file" name="image" id="image" class="input mt-1 mb-2" accept="image/png, image/jpg, image/jpeg, image/webp" required>
+							while ($row = mysqli_fetch_array($query)) {
+								$name = $row['email'];
+							?>
 
-						<label for="body">Body</label>
-						<textarea name="body" id="body" class="input mt-1 mb-2" cols="60" rows="10" required> </textarea>
+								<tr>
+									<th><?= $no ?></th>
+									<td>
+										<?= $row['isAdmin'] == 1 ? "🔑" : ""; ?>
+										<?= $row['first_name'] . ' ' . $row['last_name'] ?>
+									</td>
+									<td><?= $row['email'] ?></td>
+									<td><?= date("M d Y", strtotime($row['createdAt'])) ?></td>
+									<td>
+										<div class="d-flex justify-content-center align-items-center gap-2">
+											<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
+											<a href="./delete.php?id=<?= $row['id'] ?>" title="delete" onclick="return confirm('Do you want to delete <?= $name ?>?')"><img src="../../assets/ic_trash.svg" alt="" /></a>
+										</div>
+									</td>
+								</tr>
 
-						<label for="category" class="mt-2">Category</label>
-						<select name="category" id="category" class="input mt-1 mb-2" required>
-							<option disabled selected>Choose</option>
-							<?php while ($row = mysqli_fetch_array($query)) { ?>
-								<option value="<?= $row['name'] ?>"><?= $row['name'] ?></option>
-							<?php } ?>
-						</select>
-
-						<?php if ($_SESSION['user_isAdmin']) { ?>
-							<input type="checkbox" name="set_to_main" id="set-to-main" class="form-check-input mt-2 me-1 text-start">
-							<label for="set-to-main" class="mt-1 mb-2">Set this to main post🔥</label>
-						<?php } ?>
-
-						<?php if ($errorMessage) { ?>
-							<p class="error">* <?= $errorMessage ?></p>
-						<?php } ?>
-						<input type="submit" name="submit" id="submit" value="Publish" class="btn-primary">
-					</form>
+							<?php
+								$no++;
+							}
+							?>
+						</table>
+					</div>
 				</section>
 		</main>
 
@@ -124,13 +132,6 @@ $query = mysqli_query($conn, $sql);
 			<p>Copyright © <?= date('Y') ?> <a href="#">The Blog</a></p>
 		</footer>
 	</div>
-
-	<script>
-		tinymce.init({
-			selector: 'textarea',
-			height: 600,
-		});
-	</script>
 </body>
 
 </html>

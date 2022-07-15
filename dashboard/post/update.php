@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 	if (empty($title) || empty($category) || empty($body)) {
 		$errorMessage = "Please fill out all field";
 
-		return header("Location: ./edit_form.php?err=$errorMessage");
+		return header("Location: ./edit_form.php?id=$id&err=$errorMessage");
 	};
 
 	function deleteImage()

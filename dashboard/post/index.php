@@ -73,7 +73,7 @@ $query = mysqli_query($conn, $sql);
 								<p>Dashboard</p>
 							</a>
 						</nav>
-						
+
 						<p class="manage__title">Manage</p>
 						<nav class="nav-side" aria-label="Manage Navigation">
 							<?php if ($_SESSION['user_isAdmin']) { ?>
@@ -83,7 +83,7 @@ $query = mysqli_query($conn, $sql);
 								<a href="../category/">
 									<p>Category</p>
 								</a>
-								<a href="#">
+								<a href="../user/">
 									<p>User</p>
 								</a>
 							<?php } else { ?>
@@ -131,7 +131,7 @@ $query = mysqli_query($conn, $sql);
 										<div class="d-flex justify-content-center align-items-center gap-2">
 											<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
 											<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
-											<a href="./delete.php?id=<?= $row['id'] ?>" title="delete" onclick="return confirm('Do you want to delete <?= $title ?> post?')"><img src="../../assets/ic_trash.svg" alt="" /></a>
+											<a href="./delete.php?id=<?= $row['id'] ?>" title="delete" onclick="return confirm('Do you want to delete _<?= $title ?>_ post?')"><img src="../../assets/ic_trash.svg" alt="" /></a>
 										</div>
 									</td>
 								</tr>
