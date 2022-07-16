@@ -129,7 +129,7 @@ $query = mysqli_query($conn, $sql);
 									<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
 									<td>
 										<div class="d-flex justify-content-center align-items-center gap-2">
-											<a href="../../read.php?id=<?= $row['id'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
+											<a href="../../read.php?id=<?= $row['id'] ?>&category=<?= $row['category'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
 											<a href="./edit_form.php?id=<?= $row['id'] ?>" title="edit"><img src="../../assets/ic_edit.svg" alt="" /></a>
 											<a href="./delete.php?id=<?= $row['id'] ?>" title="delete" onclick="return confirm('Do you want to delete _<?= $title ?>_ post?')"><img src="../../assets/ic_trash.svg" alt="" /></a>
 										</div>

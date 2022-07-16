@@ -95,6 +95,7 @@ $query_category = mysqli_query($conn, $sql_category);
 
 					<form action="./update.php" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="<?= $row['id'] ?>" class="input mt-1 mb-2">
+						<input type="hidden" name="isMain" value="<?= $row['isMain'] ?>" class="input mt-1 mb-2">
 
 						<label for="title">Title</label>
 						<input type="text" name="title" id="title" value="<?= $row['title'] ?>" class="input mt-1 mb-2" required>

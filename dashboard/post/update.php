@@ -61,13 +61,21 @@ if (isset($_POST['submit'])) {
 		if (isset($setToMain)) {
 			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='1', created_main_at='$current_date' WHERE id='$id'";
 		} else {
-			$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='0', created_main_at='NULL' WHERE id='$id'";
+			if ($_SESSION['user_isAdmin']) {
+				$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category', isMain='0', created_main_at='NULL' WHERE id='$id'";
+			} else {
+				$sql = "UPDATE post SET title='$title', body='$body', image='$file_name_format', category='$category' WHERE id='$id'";
+			}
 		}
 	} else {
 		if (isset($setToMain)) {
 			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='1', created_main_at='$current_date' WHERE id='$id'";
 		} else {
-			$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='0', created_main_at='NULL' WHERE id='$id'";
+			if ($_SESSION['user_isAdmin']) {
+				$sql = "UPDATE post SET title='$title', body='$body', category='$category', isMain='0', created_main_at='NULL' WHERE id='$id'";
+			} else {
+				$sql = "UPDATE post SET title='$title', body='$body', category='$category' WHERE id='$id'";
+			}
 		}
 	}
 
