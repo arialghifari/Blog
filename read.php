@@ -95,7 +95,7 @@ $query_category_post = mysqli_query($conn, $sql_category_post);
 			<article class="row d-flex justify-content-center post">
 				<p class="title-post">Related Post</p>
 				<div class="row mb-3 p-0">
-					<?php if (mysqli_num_rows($query_category_post) <= 0) { ?> <p>No post found</p> <?php } ?>
+					<?php if (mysqli_num_rows($query_category_post) <= 0) { ?> <p>No related post found</p> <?php } ?>
 					<?php while ($row_category = mysqli_fetch_array($query_category_post)) { ?>
 						<div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
 							<a href="read.php?id=<?= $row_category['id'] ?>&category=<?= $row_category['category'] ?>">

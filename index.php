@@ -10,7 +10,7 @@ $sql_post = "SELECT post.id, post.title, post.body, post.image, post.category, p
             FROM post
             LEFT JOIN user ON post.id_user = user.id
             ORDER BY created_at DESC
-            LIMIT 6";
+            LIMIT 9";
 $query_post = mysqli_query($conn, $sql_post);
 
 $sql_main_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, post.category, user.first_name AS 'author'
