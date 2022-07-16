@@ -9,12 +9,12 @@ $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
 
 if ($category_name == 'All') {
-	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
+	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, post.category, user.first_name AS 'author'
 				FROM post
 				LEFT JOIN user ON post.id_user = user.id
 				ORDER BY created_at DESC";
 } else {
-	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
+	$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, post.category, user.first_name AS 'author'
 				FROM post
 				LEFT JOIN user ON post.id_user = user.id
 				WHERE category = '$category_name'
@@ -102,7 +102,7 @@ $query_post = mysqli_query($conn, $sql_post);
 						<?php if (mysqli_num_rows($query_post) <= 0) { ?> <p>No post found</p> <?php } ?>
 						<?php while ($row_post = mysqli_fetch_array($query_post)) { ?>
 							<div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
-								<a href="read.php?id=<?= $row_post['id'] ?>">
+								<a href="read.php?id=<?= $row_post['id'] ?>&category=<?= $row_post['category'] ?>">
 									<img src="./assets/post_image/<?= $row_post['image'] ?>" alt="" class="post__image" />
 									<p class="post__date pt-2 m-0">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
 									<p class="post__title"><?= $row_post['title'] ?></p>

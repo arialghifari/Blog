@@ -6,14 +6,14 @@ session_start();
 $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
 
-$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
+$sql_post = "SELECT post.id, post.title, post.body, post.image, post.category, post.created_at, user.first_name AS 'author'
             FROM post
             LEFT JOIN user ON post.id_user = user.id
             ORDER BY created_at DESC
             LIMIT 6";
 $query_post = mysqli_query($conn, $sql_post);
 
-$sql_main_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, user.first_name AS 'author'
+$sql_main_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, post.category, user.first_name AS 'author'
 				FROM post
 				LEFT JOIN user ON post.id_user = user.id
 				WHERE isMain = '1'
@@ -74,7 +74,7 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 			<article class="row my-5">
 				<div class="col-12 col-md post mb-3">
 					<?php if (isset($row_main_post[0]['id'])) { ?>
-						<a href="./read.php?id=<?= @$row_main_post[0]['id'] ?>" class="card-post">
+						<a href="./read.php?id=<?= @$row_main_post[0]['id'] ?>&category=id=<?= @$row_main_post[0]['category'] ?>" class="card-post">
 							<img src="./assets/post_image/<?= @$row_main_post[0]['image'] ?>" alt="" class="post__image-large" />
 							<p class="post__date">by <u><?= @$row_main_post[0]['author'] ?></u> on <?= date("M d Y", strtotime(@$row_main_post[0]['created_at'])) ?></p>
 							<p class="post__title"><?= @$row_main_post[0]['title'] ?></p>
@@ -86,7 +86,7 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 				<div class="col-12 col-md post">
 					<?php for ($i = 1; $i <= 3; $i++) {
 						if (isset($row_main_post[$i]['id'])) { ?>
-							<a href="./read.php?id=<?= @$row_main_post[$i]['id'] ?>">
+							<a href="./read.php?id=<?= @$row_main_post[$i]['id'] ?>&category=<?= @$row_main_post[$i]['category'] ?>">
 								<div class="row mb-3 card-post">
 									<div class="col-12 col-xl-6"><img src="./assets/post_image/<?= @$row_main_post[$i]['image'] ?>" alt="" class="post__image" /></div>
 									<div class="col">
@@ -137,7 +137,7 @@ while ($row = mysqli_fetch_array($query_main_post)) {
 						<?php if (mysqli_num_rows($query_post) <= 0) { ?> <p>No post found</p> <?php } ?>
 						<?php while ($row_post = mysqli_fetch_array($query_post)) { ?>
 							<div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
-								<a href="read.php?id=<?= $row_post['id'] ?>">
+								<a href="read.php?id=<?= $row_post['id'] ?>&category=<?= $row_post['category'] ?>">
 									<img src="./assets/post_image/<?= $row_post['image'] ?>" alt="" class="post__image" />
 									<p class="post__date pt-2 m-0">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
 									<p class="post__title"><?= $row_post['title'] ?></p>
