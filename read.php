@@ -9,17 +9,17 @@ $category = $_GET['category'];
 $sql_category = "SELECT * FROM category ORDER BY name";
 $query_category = mysqli_query($conn, $sql_category);
 
-$sql_post = "SELECT post.id, post.title, post.body, post.image, post.created_at, post.category, user.first_name AS 'author'
+$sql_post = "SELECT post.id, post.title, post.body, post.image, post.createdAt, post.category, user.first_name AS 'author'
 			FROM post
 			LEFT JOIN user ON post.id_user = user.id
 			WHERE post.id='$id'";
 $row_post = mysqli_fetch_array(mysqli_query($conn, $sql_post));
 
-$sql_category_post = "SELECT post.id, post.title, post.body, post.image, post.category, post.created_at, user.first_name AS 'author'
+$sql_category_post = "SELECT post.id, post.title, post.body, post.image, post.category, post.createdAt, user.first_name AS 'author'
             FROM post
             LEFT JOIN user ON post.id_user = user.id
 			WHERE category LIKE '$category' AND post.id NOT LIKE '$id'
-            ORDER BY created_at DESC
+            ORDER BY createdAt DESC
             LIMIT 3";
 $query_category_post = mysqli_query($conn, $sql_category_post);
 
@@ -77,7 +77,7 @@ $query_category_post = mysqli_query($conn, $sql_category_post);
 					</div>
 					<div class="row mt-3">
 						<div class="col d-block d-md-flex justify-content-between align-items-center">
-							<p class="m-0 mb-2 mb-md-0">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['created_at'])) ?></p>
+							<p class="m-0 mb-2 mb-md-0">by <u><?= $row_post['author'] ?></u> on <?= date("M d Y", strtotime($row_post['createdAt'])) ?></p>
 							<p class="read__category">Tag: <?= $row_post['category'] ?></p>
 						</div>
 					</div>
@@ -100,7 +100,7 @@ $query_category_post = mysqli_query($conn, $sql_category_post);
 						<div class="col-12 col-md-6 col-lg-4 mb-3 card-post">
 							<a href="read.php?id=<?= $row_category['id'] ?>&category=<?= $row_category['category'] ?>">
 								<img src="./assets/post_image/<?= $row_category['image'] ?>" alt="" class="post__image" />
-								<p class="post__date pt-2 m-0">by <u><?= $row_category['author'] ?></u> on <?= date("M d Y", strtotime($row_category['created_at'])) ?></p>
+								<p class="post__date pt-2 m-0">by <u><?= $row_category['author'] ?></u> on <?= date("M d Y", strtotime($row_category['createdAt'])) ?></p>
 								<p class="post__title"><?= $row_category['title'] ?></p>
 								<p class="post__body wrap">
 									<?= implode(' ', array_slice(explode(' ', strip_tags($row_category['body'])), 0, 15)); ?>...

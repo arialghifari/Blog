@@ -8,18 +8,18 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if ($_SESSION['user_isAdmin']) {
-	$sql = "SELECT post.id, post.title, post.created_at, post.category, post.isMain,user.first_name AS 'author'
+	$sql = "SELECT post.id, post.title, post.createdAt, post.category, post.isMain,user.first_name AS 'author'
 			FROM post
 			LEFT JOIN user ON post.id_user = user.id
-			ORDER BY created_at DESC";
+			ORDER BY createdAt DESC";
 } else {
 	$user_id = $_SESSION['user_id'];
 
-	$sql = "SELECT post.id, post.title, post.created_at, post.category, post.isMain,user.first_name AS 'author'
+	$sql = "SELECT post.id, post.title, post.createdAt, post.category, post.isMain,user.first_name AS 'author'
 			FROM post
 			LEFT JOIN user ON post.id_user = user.id
 			WHERE id_user='$user_id'
-			ORDER BY created_at DESC";
+			ORDER BY createdAt DESC";
 }
 $query = mysqli_query($conn, $sql);
 
@@ -126,7 +126,7 @@ $query = mysqli_query($conn, $sql);
 									<?php if ($_SESSION['user_isAdmin']) { ?>
 										<td><?= $row['author'] ?></td>
 									<?php } ?>
-									<td><?= date("M d Y", strtotime($row['created_at'])) ?></td>
+									<td><?= date("M d Y", strtotime($row['createdAt'])) ?></td>
 									<td>
 										<div class="d-flex justify-content-center align-items-center gap-2">
 											<a href="../../read.php?id=<?= $row['id'] ?>&category=<?= $row['category'] ?>" target="_blank" title="view"><img src="../../assets/ic_eye.svg" alt="" /></a>
