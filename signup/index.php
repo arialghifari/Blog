@@ -66,6 +66,10 @@ if (isset($_SESSION['user_id'])) {
 			</section>
 		</main>
 	</div>
+
+	<footer>
+		<p>Copyright © <?= date('Y') ?> <a href="#">The Blog</a></p>
+	</footer>
 </body>
 
 </html>
