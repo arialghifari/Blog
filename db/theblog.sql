@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2022 at 08:20 PM
+-- Generation Time: Jul 25, 2022 at 05:12 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -51,7 +51,6 @@ INSERT INTO `category` (`id`, `name`, `createdAt`) VALUES
 (11, 'Economy', '2022-06-30 00:00:00'),
 (14, 'Education', '2022-07-04 00:00:00'),
 (15, 'Nature', '2022-07-04 00:00:00'),
-(19, 'Astronomy', '2022-07-10 00:00:00'),
 (20, 'Food', '2022-07-24 00:00:00');
 
 -- --------------------------------------------------------
@@ -117,9 +116,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `password`, `first_name`, `last_name`, `isAdmin`, `createdAt`) VALUES
 (1, 'admin@theblog.com', '$2y$10$TxuRFXr7GoZViNiRi2/cm.hcBFEddCWZmiPUQ3W5fWV1Lc6IlYpyG', 'TheBlog', 'Admin', 1, '2022-07-24 10:06:21'),
-(7, 'arialghifari99@gmail.com', '$2y$10$c8WwB11xUYhVFpvHRj5DvuNBJC938dpQQImRkS5cyMt60ELW.a1hS', 'Ari', 'Alghifari', 0, '2022-07-24 03:55:17'),
-(10, 'rama@gmail.com', '$2y$10$9ELBTtEHeXLNbdfLzhgO8.JClMiGkf0DeBGXe9a6XrY4Ogr7MGRUe', 'Rama', 'Ramadan', 0, '2022-07-15 23:10:02'),
-(16, 'adikurniadi234@gmail.com', '$2y$10$4DF9i3.NA4Al8I.yUWhCHOYB3k/lv2auAgJDNwZMQUO5MvZ9VUfqa', 'Adii', 'Kurniadiy', 0, '2022-07-24 09:56:55');
+(7, 'arialghifari99@gmail.com', '$2y$10$6EM/o8NHMXF//m8r7XojM.mXo3RRkuxddyBGpNB4fKF4pIIK5wV8u', 'Ari', 'Alghifari', 0, '2022-07-24 03:55:17');
 
 --
 -- Indexes for dumped tables
@@ -158,13 +155,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
